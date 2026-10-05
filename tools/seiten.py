@@ -407,7 +407,7 @@ def karriere():
 <div class="schritt-f" data-auto="ja" data-hinweis="Bitte wähle eine Stelle aus."><h3>Für welche Stelle interessierst du dich?</h3><p>Keine Sorge – du kannst das im Gespräch noch ändern.</p>
 <div class="optionen">{opt('stelle', 'gruenpflege', 'Mitarbeiter Grünpflege', 'Rasen, Hecken, Wege', 'blatt', param='stelle')}{opt('stelle', 'kolonnenfuehrer', 'Kolonnenführer / Vorarbeiter', 'Team führen, Objekte betreuen', 'team', param='stelle')}{opt('stelle', 'winterdienst', 'Winterdienst-Fahrer', 'Saison November bis März', 'schnee', param='stelle')}{opt('stelle', 'initiativ', 'Initiativbewerbung', 'Ich bin offen für mehr', 'stern', param='stelle')}</div></div>
 <div class="schritt-f" data-auto="ja" data-hinweis="Bitte wähle eine Antwort."><h3>Wie viel Erfahrung bringst du mit?</h3><p>Quereinsteiger sind bei uns ausdrücklich willkommen.</p>
-<div class="optionen">{opt('erfahrung', 'quereinsteiger', 'Quereinsteiger', 'Ich will draußen anpacken', 'blitz')}{opt('erfahrung', 'etwas', 'Etwas Erfahrung', 'Bis zu 2 Jahre in Grünpflege oder Bau', 'blatt')}{opt('erfahrung', 'viel', 'Viel Erfahrung', 'Mehr als 2 Jahre', 'stern')}{opt('erfahrung', 'ausbildung', 'Ausbildung im GaLaBau', 'Landschaftsgärtner o. Ä.', 'schild')}</div></div>
+<div class="optionen">{opt('erfahrung', 'quereinsteiger', 'Quereinsteiger', 'Ich will draußen anpacken', 'blitz')}{opt('erfahrung', 'etwas', 'Etwas Erfahrung', 'Bis zu 2 Jahre in Grünpflege oder Bau', 'blatt')}{opt('erfahrung', 'viel', 'Viel Erfahrung', 'Mehr als 2 Jahre', 'stern')}{opt('erfahrung', 'ausbildung', 'Ausbildung im GaLaBau', 'Landschaftsgärtner o.&nbsp;Ä.', 'schild')}</div></div>
 <div class="schritt-f" data-auto="ja" data-hinweis="Bitte wähle deinen Führerschein."><h3>Welchen Führerschein hast du?</h3><p>Für den Start reicht oft Klasse B.</p>
 <div class="optionen">{opt('fuehrerschein', 'b', 'Klasse B', 'Pkw', 'auto')}{opt('fuehrerschein', 'be', 'Klasse BE', 'Pkw mit Anhänger', 'auto')}{opt('fuehrerschein', 'c', 'Klasse C / CE', 'Lkw', 'auto')}{opt('fuehrerschein', 'keiner', 'Noch keinen', 'Ist kein Ausschlusskriterium', 'info')}</div></div>
 <div class="schritt-f" data-auto="ja" data-hinweis="Bitte wähle, ab wann du starten kannst."><h3>Ab wann könntest du starten?</h3><p>Damit wir besser planen können.</p>
@@ -556,7 +556,7 @@ def impressum():
     schreibe('/impressum/', seite('/impressum/', 'Impressum | TKL GmbH', 'Impressum der TKL GmbH, Hochstraße 184, 47228 Duisburg.', inhalt))
 
 def datenschutz():
-    inhalt = f'''<section class="seitenkopf"><div class="wrap schmal">{brot(('Datenschutz', None))}<h1>Datenschutzerklärung</h1></div></section>
+    inhalt = f'''<section class="seitenkopf"><div class="wrap schmal">{brot(('Datenschutz', None))}<h1>Datenschutz&shy;erklärung</h1></div></section>
 <section class="sec" style="padding-top:0"><div class="wrap schmal"><div class="rechtstext">
 <div class="entwurf-hinweis"><b>Entwurf:</b> Auf die Technik dieser Website zugeschnitten. Vor dem Go-live rechtlich prüfen lassen und Kontaktdaten des Verantwortlichen bzw. Datenschutzbeauftragten mit TKL abstimmen.</div>
 <h2>1. Verantwortlicher</h2><p>TKL GmbH, Hochstraße 184, 47228 Duisburg, Telefon 02065 90 36-0, E-Mail <a href="mailto:{MAIL}">{MAIL}</a>.</p>
