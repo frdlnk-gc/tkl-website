@@ -9,7 +9,7 @@ SITE = os.path.join(ROOT, 'site')
 BASE = '/tkl-website'  # Unterpfad auf frdlnk-gc.github.io; bei eigener Domain auf '' setzen
 BASIS_URL = 'https://frdlnk-gc.github.io' + BASE
 VORSCHAU = True  # solange die Seite auf der Vorschau-Domain liegt: noindex
-V = '20261005f'  # Cache-Version für CSS/JS
+V = '20261005g'  # Cache-Version für CSS/JS
 
 TEL, TEL_LINK = '02065 90 36-0', 'tel:+492065903600'
 MAIL = 'info@tkl.gmbh'

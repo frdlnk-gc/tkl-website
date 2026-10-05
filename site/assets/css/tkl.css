@@ -146,7 +146,7 @@ section { position: relative; }
 .marke-text small { font: 600 .6rem/1 var(--font); letter-spacing: .13em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
 .nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .nav > a, .nav-drop > button {
-  display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; border-radius: 999px; border: 0; background: none;
+  white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; border-radius: 999px; border: 0; background: none;
   font-weight: 560; font-size: .97rem; text-decoration: none; cursor: pointer; color: var(--ink-2); transition: background .2s, color .2s;
 }
 .nav > a:hover, .nav-drop > button:hover, .nav > a[aria-current="page"], .nav-drop.aktiv > button { background: rgba(21, 25, 28, .06); color: var(--ink); }
@@ -520,6 +520,7 @@ body.nav-offen .burger span:nth-child(3) { transform: translateY(-5px) rotate(-4
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .tel span { display: none; }
+  .marke-text small { display: none; }
   .nav > a, .nav-drop > button { padding: 10px 10px; }
   .fuss-grid { grid-template-columns: 1fr 1fr; }
   .werte, .tag-ablauf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
