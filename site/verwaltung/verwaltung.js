@@ -11,7 +11,7 @@
     anfrage: [['neu', 'Neu'], ['kontaktiert', 'Kontaktiert'], ['termin', 'Termin vor Ort'], ['angebot', 'Angebot raus'], ['gewonnen', 'Auftrag'], ['abgesagt', 'Kein Auftrag'], ['archiviert', 'Archiviert']],
     bewerbung: [['neu', 'Neu'], ['kontaktiert', 'Kontaktiert'], ['termin', 'Gespräch vereinbart'], ['eingestellt', 'Eingestellt'], ['abgesagt', 'Abgesagt'], ['archiviert', 'Archiviert']]
   };
-  var FELD = { leistungen: 'Leistungen', objekt: 'Objekt', umfang: 'Anzahl Objekte', start: 'Start', stelle: 'Stelle', erfahrung: 'Erfahrung', fuehrerschein: 'Führerschein', arbeitszeit: 'Arbeitszeit' };
+  var FELD = { leistungen: 'Leistungen', objekt: 'Objekt', umfang: 'Anzahl Objekte', start: 'Start', rueckruf: 'Rückruf gewünscht', zeit: 'Wunschzeit', stelle: 'Stelle', erfahrung: 'Erfahrung', fuehrerschein: 'Führerschein', arbeitszeit: 'Arbeitszeit' };
   var SEITE = { '/': 'Startseite', '/leistungen/': 'Leistungen', '/leistungen/gruenpflege/': 'Grünpflege', '/leistungen/winterdienst/': 'Winterdienst', '/leistungen/spielplaetze/': 'Spielplätze', '/leistungen/baumpflege/': 'Baumpflege', '/leistungen/aussenanlagen/': 'Neubau & Sanierung', '/karriere/': 'Karriere', '/kontakt/': 'Kontakt', '/ueber-uns/': 'Über uns', '/impressum/': 'Impressum', '/datenschutz/': 'Datenschutz' };
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -127,6 +127,7 @@
     var d = l.daten || {}, chips = [];
     if (l.typ === 'anfrage') { (Array.isArray(d.leistungen) ? d.leistungen : []).forEach(function (x) { chips.push(x); }); if (d.objekt) chips.push(d.objekt); }
     else { if (d.stelle) chips.push(d.stelle); if (d.fuehrerschein) chips.push('FS ' + d.fuehrerschein.replace('Klasse ', '')); if (d.erfahrung) chips.push(d.erfahrung); }
+    if (d.rueckruf) chips.unshift('Rückruf');
     var initialen = l.name.split(/\s+/).map(function (w) { return w[0]; }).slice(0, 2).join('').toUpperCase();
     var sub = l.typ === 'anfrage' ? [l.firma, l.ort].filter(Boolean).join(' · ') : [l.ort, l.telefon].filter(Boolean).join(' · ');
     return '<button type="button" class="vw-eintrag' + (l.status === 'neu' ? ' neu' : '') + '" data-id="' + l.id + '" data-typ="' + l.typ + '"><span class="vw-ava">' + esc(initialen) + '</span>' +
