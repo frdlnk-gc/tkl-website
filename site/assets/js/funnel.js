@@ -93,7 +93,7 @@
     absenden.addEventListener('click', function () {
       if (!pruefe()) return;
       var fd = new FormData(form), daten = {}, felder = ['name', 'firma', 'email', 'telefon', 'ort', 'nachricht', 'website'];
-      var payload = { typ: form.dataset.typ, quelle: location.pathname, dauer: start ? Date.now() - start : 0, datenschutz: !!form.querySelector('[name=datenschutz]:checked') };
+      var payload = { typ: form.dataset.typ, quelle: location.pathname.replace(/^\/tkl-website(?=\/)/, ''), dauer: start ? Date.now() - start : 0, datenschutz: !!form.querySelector('[name=datenschutz]:checked') };
       form.querySelectorAll('.schritt-f').forEach(function (s) {
         s.querySelectorAll('input[type=radio]:checked, input[type=checkbox]:checked').forEach(function (el) {
           if (el.name === 'datenschutz') return;

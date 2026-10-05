@@ -575,7 +575,7 @@ def fehlerseite():
     inhalt = f'''<section class="sec"><div class="wrap schmal" style="text-align:center"><span class="eyebrow">Fehler 404</span><h1>Hier wächst leider nichts.</h1><p class="lead">Die Seite gibt es nicht (mehr). Vielleicht hilft Ihnen einer dieser Links weiter:</p>
 <div class="btn-reihe" style="justify-content:center"><a class="btn" href="/">Zur Startseite</a><a class="btn rand" href="/leistungen/">Leistungen</a><a class="btn rand" href="/kontakt/">Kontakt</a></div></div></section>'''
     s = seite('/404.html', 'Seite nicht gefunden | TKL GmbH', 'Diese Seite wurde nicht gefunden.', inhalt, body_attr=' data-kein-tracking')
-    open(os.path.join(SITE, '404.html'), 'w', encoding='utf-8').write(s); print('✓ /404.html')
+    open(os.path.join(SITE, '404.html'), 'w', encoding='utf-8').write(mit_basis(s)); print('✓ /404.html')
 
 def weiterleitungen():
     """Alte WordPress-Adressen von tkl.gmbh -> neue Seiten (wichtig nach dem Domain-Umzug)."""
@@ -583,7 +583,7 @@ def weiterleitungen():
              'baumpflege': '/leistungen/baumpflege/', 'spielplaetze': '/leistungen/spielplaetze/', 'stellenanzeigen': '/karriere/', 'referenzen': '/ueber-uns/'}
     for alt, neu in ziele.items():
         d = os.path.join(SITE, alt); os.makedirs(d, exist_ok=True)
-        open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write(f'<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Weiterleitung</title><meta name="robots" content="noindex"><link rel="canonical" href="{BASIS_URL}{neu}"><meta http-equiv="refresh" content="0; url={neu}"><script>location.replace("{neu}")</script></head><body><a href="{neu}">Weiter zur neuen Seite</a></body></html>')
+        open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write(mit_basis(f'<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Weiterleitung</title><meta name="robots" content="noindex"><link rel="canonical" href="{BASIS_URL}{neu}"><meta http-equiv="refresh" content="0; url={neu}"><script>location.replace("{neu}")</script></head><body><a href="{neu}">Weiter zur neuen Seite</a></body></html>'))
     print('✓ Weiterleitungen', len(ziele))
 
 def intern():

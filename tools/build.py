@@ -1,12 +1,13 @@
 """Baut alle Seiten der TKL-Website nach site/. Aufruf: python3 tools/build.py
 Eine Seite = eine statische HTML-Datei (saubere URLs über Ordner/index.html)."""
-import os, json, html
+import os, re, json, html
 from PIL import Image
 from teile import ic, logo_mark, marke, hecke, karte
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, 'site')
-BASIS_URL = 'https://tkl.greenfield-digital.de'
+BASE = '/tkl-website'  # Unterpfad auf frdlnk-gc.github.io; bei eigener Domain auf '' setzen
+BASIS_URL = 'https://frdlnk-gc.github.io' + BASE
 VORSCHAU = True  # solange die Seite auf der Vorschau-Domain liegt: noindex
 V = '20261005f'  # Cache-Version für CSS/JS
 
@@ -139,7 +140,15 @@ def seite(pfad, titel, beschreibung, inhalt, aktiv='', funnel=False, extra_head=
 </body>
 </html>'''
 
+def mit_basis(html_text):
+    """Absolute Pfade (/assets/…, /kontakt/ …) um den Unterpfad ergänzen."""
+    if not BASE: return html_text
+    html_text = re.sub(r'((?:href|src|poster|action)=")/(?!/)', r'\1' + BASE + '/', html_text)
+    html_text = re.sub(r'(srcset="[^"]*")', lambda m: re.sub(r'(^srcset="|, )/(?!/)', lambda n: n.group(1) + BASE + '/', m.group(1)), html_text)
+    return html_text.replace('url=/', 'url=' + BASE + '/').replace('location.replace("/', 'location.replace("' + BASE + '/')
+
 def schreibe(pfad, inhalt):
+    inhalt = mit_basis(inhalt)
     ziel = os.path.join(SITE, pfad.strip('/'), 'index.html') if pfad != '/' else os.path.join(SITE, 'index.html')
     os.makedirs(os.path.dirname(ziel), exist_ok=True)
     open(ziel, 'w', encoding='utf-8').write(inhalt)
@@ -169,3 +178,7 @@ import seiten  # noqa: E402  (Seiteninhalte)
 
 if __name__ == '__main__':
     seiten.alle(globals())
+    # statische Verwaltung aus Vorlage mit Basis schreiben
+    v = open(os.path.join(ROOT, 'tools', 'verwaltung.vorlage.html'), encoding='utf-8').read()
+    open(os.path.join(SITE, 'verwaltung', 'index.html'), 'w', encoding='utf-8').write(mit_basis(v.replace('20261005f', V)))
+    open(os.path.join(SITE, 'CNAME'), 'w').write('') if False else None

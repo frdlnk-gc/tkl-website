@@ -1,6 +1,6 @@
 # TKL GmbH – Website (Vorschau Greenfield Digital)
 
-Vorschau: https://tkl.greenfield-digital.de · Verwaltung: https://tkl.greenfield-digital.de/verwaltung/
+Vorschau: https://frdlnk-gc.github.io/tkl-website/ · Verwaltung: …/verwaltung/ (Umzug auf eigene Domain: BASE in tools/build.py auf "" setzen, CNAME anlegen)
 
 ## Aufbau
 - `site/` – fertige statische Website (wird per GitHub Actions auf GitHub Pages veröffentlicht)

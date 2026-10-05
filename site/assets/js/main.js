@@ -103,7 +103,7 @@
   }
   window.tklTrack = function (typ) {
     if (/^(localhost|127\.)/.test(location.hostname) && !params.has('track')) return;
-    var d = JSON.stringify({ typ: typ || 'view', pfad: location.pathname, ref: document.referrer ? document.referrer.slice(0, 200) : null, quelle: quelle() });
+    var d = JSON.stringify({ typ: typ || 'view', pfad: location.pathname.replace(/^\/tkl-website(?=\/)/, ''), ref: document.referrer ? document.referrer.slice(0, 200) : null, quelle: quelle() });
     try { fetch(API + '/track', { method: 'POST', body: d, headers: { 'content-type': 'application/json' }, keepalive: true, mode: 'cors' }).catch(function () {}); } catch (e) {}
   };
   if (!body.hasAttribute('data-kein-tracking')) window.tklTrack('view');
