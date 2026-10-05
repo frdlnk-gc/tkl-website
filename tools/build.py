@@ -8,7 +8,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, 'site')
 BASIS_URL = 'https://tkl.greenfield-digital.de'
 VORSCHAU = True  # solange die Seite auf der Vorschau-Domain liegt: noindex
-V = '20261005e'  # Cache-Version für CSS/JS
+V = '20261005f'  # Cache-Version für CSS/JS
 
 TEL, TEL_LINK = '02065 90 36-0', 'tel:+492065903600'
 MAIL = 'info@tkl.gmbh'

@@ -4,7 +4,7 @@ def alle(g):
     globals().update(g)
     startseite(); leistungen_uebersicht()
     for l in LEISTUNGEN: leistung(l)
-    ueber_uns(); karriere(); kontakt(); impressum(); datenschutz(); fehlerseite(); logo_entwurf()
+    ueber_uns(); karriere(); kontakt(); impressum(); datenschutz(); fehlerseite(); intern(); weiterleitungen()
 
 
 # =====================================================================
@@ -15,8 +15,8 @@ def startseite():
     for n, (s, t, k, i, f, b, illu) in enumerate(LEISTUNGEN):
         farbe = {'gruen': 'var(--green)', 'blau': 'var(--blue)', 'rot': 'var(--red)', 'sand': '#c9922a'}[f]
         karten.append(f'''<a class="lk{' gross' if n < 2 else ''} rv d{n % 3 + 1}" href="/leistungen/{s}/" style="--c:{farbe}">
-<span class="tag">{'Kernleistung' if n == 0 else ('Illustration' if illu else 'Leistung')}</span>
-<div class="lk-bild">{bild(b, '' if illu else 'Mitarbeiter der TKL mäht mit dem Aufsitzmäher eine Rasenfläche vor einem Wohnblock', '(max-width: 640px) 100vw, (max-width: 980px) 50vw, 40vw')}</div>
+<span class="tag">{['Kernleistung', 'November bis März', 'Sicherheit zuerst', 'Teil der Grünpflege', 'Für Bestandskunden'][n]}</span>
+<div class="lk-bild{' illu' if illu else ''}">{bild(b, '' if illu else 'Mitarbeiter der TKL mäht mit dem Aufsitzmäher eine Rasenfläche vor einem Wohnblock', '(max-width: 640px) 100vw, (max-width: 980px) 50vw, 40vw')}</div>
 <div class="lk-text"><h3>{t}</h3><p>{k}</p><span class="mehr">Mehr erfahren <i>{ic('pfeil')}</i></span></div></a>''')
     inhalt = f'''
 <section class="hero" aria-labelledby="hero-titel">
@@ -178,7 +178,7 @@ def startseite():
 # LEISTUNGEN ÜBERSICHT
 # =====================================================================
 def leistungen_uebersicht():
-    karten = ''.join(f'''<a class="lk rv d{n % 3 + 1}" href="/leistungen/{s}/"><div class="lk-bild">{bild(b, '', '(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw')}</div>
+    karten = ''.join(f'''<a class="lk rv d{n % 3 + 1}" href="/leistungen/{s}/"><div class="lk-bild{' illu' if illu else ''}">{bild(b, '', '(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw')}</div>
 <div class="lk-text"><h3 style="display:flex;gap:10px;align-items:center"><span class="ic {f}" style="width:38px;height:38px;border-radius:11px;display:grid;place-items:center">{ic(i)}</span>{t}</h3><p>{k}</p><span class="mehr">Zur Leistung <i>{ic('pfeil')}</i></span></div></a>''' for n, (s, t, k, i, f, b, illu) in enumerate(LEISTUNGEN))
     inhalt = f'''
 <section class="seitenkopf"><div class="wrap">
@@ -577,17 +577,53 @@ def fehlerseite():
     s = seite('/404.html', 'Seite nicht gefunden | TKL GmbH', 'Diese Seite wurde nicht gefunden.', inhalt, body_attr=' data-kein-tracking')
     open(os.path.join(SITE, '404.html'), 'w', encoding='utf-8').write(s); print('✓ /404.html')
 
-def logo_entwurf():
-    """Interne Seite für Janni/Steffi – nicht verlinkt, noindex."""
-    alt = '/assets/img/logo-alt.png'
+def weiterleitungen():
+    """Alte WordPress-Adressen von tkl.gmbh -> neue Seiten (wichtig nach dem Domain-Umzug)."""
+    ziele = {'gruenpflege': '/leistungen/gruenpflege/', 'winterdienst': '/leistungen/winterdienst/', 'neubau': '/leistungen/aussenanlagen/',
+             'baumpflege': '/leistungen/baumpflege/', 'spielplaetze': '/leistungen/spielplaetze/', 'stellenanzeigen': '/karriere/', 'referenzen': '/ueber-uns/'}
+    for alt, neu in ziele.items():
+        d = os.path.join(SITE, alt); os.makedirs(d, exist_ok=True)
+        open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write(f'<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Weiterleitung</title><meta name="robots" content="noindex"><link rel="canonical" href="{BASIS_URL}{neu}"><meta http-equiv="refresh" content="0; url={neu}"><script>location.replace("{neu}")</script></head><body><a href="{neu}">Weiter zur neuen Seite</a></body></html>')
+    print('✓ Weiterleitungen', len(ziele))
+
+def intern():
+    """Interne Abstimmungsseite für Janni/Steffi – nicht verlinkt, noindex."""
     b = '''<svg viewBox="0 0 100 100" role="img" aria-label="Logo-Entwurf B"><rect x="4" y="4" width="92" height="92" rx="26" fill="#15191C"/><rect x="24" y="30" width="11" height="42" rx="5.5" fill="#2DB35C"/><circle cx="64" cy="35" r="14" fill="#E8352D"/><path d="M46 72h34L63 44Z" fill="#4AA3EA" stroke="#4AA3EA" stroke-width="4" stroke-linejoin="round"/></svg>'''
-    inhalt = f'''<section class="seitenkopf"><div class="wrap"><span class="eyebrow">Intern · Greenfield Digital</span><h1>Logo: Neuinterpretation</h1><p class="lead">Arbeitsstand für die Abstimmung mit TKL. Diese Seite ist nicht verlinkt und nicht in Suchmaschinen.</p></div></section>
-<section class="sec" style="padding-top:0"><div class="wrap grid-3">
-<div class="box"><span class="eyebrow">Bisher</span><div style="height:200px;display:grid;place-items:center"><img src="{alt}" alt="Bisheriges TKL-Logo" width="150" height="150" style="image-rendering:auto"></div><h3>Original</h3><p class="muted">Gemalter Pinselrahmen, roter Kreis, grüner Balken, blaues Dreieck. Steht auf 25 Fahrzeugen, Kleidung und Wänden.</p></div>
-<div class="box"><span class="eyebrow">Entwurf A · auf der Website</span><div style="height:200px;display:grid;place-items:center"><div style="width:150px">{logo_mark()}</div></div><h3>Nah am Original</h3><p class="muted">Gleiche Bausteine und Anordnung, aber als saubere Vektorgrafik: kräftiger, ruhiger, auch klein gut lesbar. Passt neben die bestehende Fahrzeugbeklebung – Umstellung nach und nach möglich.</p></div>
-<div class="box"><span class="eyebrow">Entwurf B · weiter weg</span><div style="height:200px;display:grid;place-items:center"><div style="width:150px">{b}</div></div><h3>Modernes Zeichen</h3><p class="muted">Nur die drei Farbformen als App-artiges Zeichen. Sehr modern, aber deutlicher Bruch – eher für einen späteren kompletten Marken-Relaunch.</p></div>
-</div>
-<div class="wrap" style="margin-top:30px"><div class="grid-2">
-<div class="box">{marke()}</div><div class="box" style="background:var(--ink)">{marke(hell=True)}</div>
-</div></div></section>'''
-    schreibe('/logo-entwurf/', seite('/logo-entwurf/', 'Logo-Entwurf (intern) | TKL', 'Interner Arbeitsstand.', inhalt, body_attr=' data-kein-tracking'))
+    klaeren = [
+     ('Mitarbeiterzahl', 'Alte Website: „über 100“, im Gespräch: rund 50. Auf der neuen Seite steht deshalb keine Zahl. Genutzt werden: 3 Standorte, 8 Kolonnen, 25 Fahrzeuge, „einige seit über 20 Jahren dabei“ – bitte bestätigen.', 'Startseite, Über uns'),
+     ('Geschäftsführer auf dem Foto', 'Bildunterschrift lautet „Ralf Jung · Geschäftsführung“ (aus dem alten Impressum abgeleitet). Name und Funktion bitte bestätigen.', 'Über uns'),
+     ('Krinkels-Gruppe', '„Seit 2003 Teil der Krinkels-Gruppe“ stammt von der alten Seite. Noch aktuell und soll das genannt werden?', 'Über uns'),
+     ('Impressum', 'Vertreter (Ruud Krinkels, Peter van Boesschouten), HRB 24364, USt-ID und Fax aus dem alten Impressum übernommen – aktuell?', 'Impressum'),
+     ('Karriere-Vorteile', 'Bitte bestätigen: Arbeitskleidung gestellt, Arbeit das ganze Jahr (Winterdienst), Führerschein B reicht für den Start, BE für Kolonnenführer.', 'Karriere'),
+     ('Offene Stellen', 'Angelegt: Mitarbeiter Grünpflege, Kolonnenführer/Vorarbeiter, Winterdienst-Fahrer (Saison), Initiativ. Passt das? Gibt es Gehaltsspannen oder Zusatzleistungen, die wir nennen dürfen?', 'Karriere'),
+     ('Ansprechpartner', 'Die alte Seite nennt Thomas Schröder und Wolfram Rybacki mit Durchwahlen. Noch aktuell? Dann bekommen die Leistungsseiten wieder Namen und Fotos.', 'Leistungsseiten'),
+     ('Referenzen', 'Dürfen Kunden genannt werden (z. B. LEG, GEBAG, SWS Mülheim, Covivio)? Mit Logos wäre ein Referenzband auf der Startseite stark.', 'Startseite'),
+     ('Qualifikationen', 'Spielplatzkontrollen (Norm DIN EN 1176, Schulungen), Baumpflege (AS Baum I/II), Straßenbauer-Handwerksrolle für Pflaster – noch aktuell?', 'Leistungsseiten'),
+     ('Benachrichtigung', 'Neue Anfragen und Bewerbungen landen im Backend. An welche E-Mail-Adresse(n) soll zusätzlich eine Info gehen?', 'Backend'),
+     ('Erreichbarkeit', 'Telefonzeiten der Zentrale (aktuell „Mo. bis Fr.“) und ob die Niederlassungen eigene Durchwahlen haben.', 'Kontakt'),
+     ('Instagram & Co.', 'Link zum neuen Instagram-Kanal; Facebook/YouTube der alten Seite noch aktiv?', 'Footer'),
+    ]
+    umzug = [
+     ('Domain-Verwaltung', 'Bei welchem Anbieter liegt tkl.gmbh (z. B. IONOS, Strato)? Wir brauchen entweder einen Zugang oder eine Person (IT/Agentur), die zwei DNS-Einträge setzt.'),
+     ('DNS-Einträge', 'tkl.gmbh: A-Einträge auf 185.199.108.153, .109.153, .110.153, .111.153 · www.tkl.gmbh: CNAME auf frdlnk-gc.github.io. Danach stellen wir die Domain in GitHub um, das Zertifikat kommt automatisch.'),
+     ('E-Mail nicht anfassen', 'MX-, SPF- und DKIM-Einträge bleiben unverändert – info@tkl.gmbh und alle Postfächer laufen weiter. Vorher Screenshot der aktuellen DNS-Liste sichern.'),
+     ('Alte Website', 'WordPress-Hosting erst nach dem Umzug kündigen. Alte Adressen (/gruenpflege/, /stellenanzeigen/ …) leiten wir bereits auf die neuen Seiten um.'),
+     ('Google-Unternehmensprofil', 'Zugang oder Freigabe, damit Standorte (Berlin, Münsterland raus), Telefonnummer und Website stimmen – das ist die Hauptquelle der Fehlanrufe.'),
+     ('Google Search Console', 'Zugang oder Einladung an uns, damit wir die neue Seite anmelden und die Sitemap einreichen.'),
+     ('Rechtstexte', 'Impressum und Datenschutz final von TKL (bzw. Datenschutzbeauftragtem) freigeben lassen.'),
+     ('Zugänge Verwaltung', 'Wer bei TKL soll ins Backend (Name + E-Mail)? Jede Person bekommt einen eigenen Login.'),
+     ('Alte Domain tk-landschaftsbau.de', 'Wird sie noch genutzt (alte E-Mail-Adressen)? Falls ja: Weiterleitung auf tkl.gmbh einrichten.'),
+    ]
+    li = lambda arr, nr=True: ''.join(f'<li><b>{t}</b><span>{x}</span>{f"<em>{w}</em>" if len(e) and (w := e[0]) else ""}</li>' for t, x, *e in arr)
+    inhalt = f'''<section class="seitenkopf"><div class="wrap"><span class="eyebrow">Intern · Greenfield Digital · Stand 05.10.2026</span><h1>TKL-Website: Abstimmung</h1><p class="lead">Arbeitsstand für Janni und Steffi. Diese Seite ist nicht verlinkt und nicht in Suchmaschinen.</p>
+<div class="btn-reihe"><a class="btn dunkel klein" href="/">Website ansehen</a><a class="btn rand klein" href="/verwaltung/">Verwaltung (Login)</a></div></div></section>
+<section class="sec" style="padding-top:0"><div class="wrap"><h2 style="font-size:1.8rem">1. Logo – Neuinterpretation</h2><div class="grid-3" style="margin-top:20px">
+<div class="box"><span class="eyebrow">Bisher</span><div style="height:180px;display:grid;place-items:center"><img src="/assets/img/logo-alt.png" alt="Bisheriges TKL-Logo" width="140" height="140"></div><h3>Original</h3><p class="muted">Gemalter Pinselrahmen, roter Kreis, grüner Balken, blaues Dreieck. Steht auf rund 25 Fahrzeugen, Kleidung und Wänden.</p></div>
+<div class="box"><span class="eyebrow">Entwurf A · auf der Website</span><div style="height:180px;display:grid;place-items:center"><div style="width:140px">{logo_mark()}</div></div><h3>Nah am Original</h3><p class="muted">Gleiche Bausteine, gleiche Anordnung – als saubere Vektorgrafik, kräftiger und auch klein gut lesbar. Passt neben die bestehende Beklebung, Umstellung nach und nach möglich.</p></div>
+<div class="box"><span class="eyebrow">Entwurf B · weiter weg</span><div style="height:180px;display:grid;place-items:center"><div style="width:140px">{b}</div></div><h3>Modernes Zeichen</h3><p class="muted">Nur die drei Farbformen als Zeichen. Sehr modern, aber ein deutlicher Bruch – eher für einen späteren kompletten Marken-Relaunch.</p></div>
+</div><div class="grid-2" style="margin-top:18px"><div class="box">{marke()}</div><div class="box" style="background:var(--ink)">{marke(hell=True)}</div></div></div></section>
+<section class="sec bg-weiss"><div class="wrap schmal"><h2 style="font-size:1.8rem">2. Bitte mit TKL klären</h2><p class="muted">Diese Angaben stehen so auf der Seite oder fehlen bewusst, bis TKL sie bestätigt.</p><ol class="intern-liste">{li(klaeren)}</ol></div></section>
+<section class="sec"><div class="wrap schmal"><h2 style="font-size:1.8rem">3. Umzug auf tkl.gmbh – was wir von TKL brauchen</h2><ol class="intern-liste">{li(umzug)}</ol>
+<h2 style="font-size:1.8rem;margin-top:50px">4. Technik in Kürze</h2><ul class="haken"><li>Website: statisch, gehostet auf GitHub Pages (Repo frdlnk-gc/tkl-website), schnell und wartungsarm</li><li>Formulare + Verwaltung: Supabase (EU), eigener Login, Daten getrennt von GreenCareers</li><li>Besucherzahlen ohne Cookies – kein Cookie-Banner nötig</li><li>Schriften lokal eingebunden (kein Google-Fonts-Abruf)</li><li>Bilder: Drive-Material vom Dreh 30.09.; Winterdienst, Spielplätze, Baumpflege und Neubau als gekennzeichnete Illustrationen, bis eigene Fotos da sind</li></ul></div></section>'''
+    extra = '<style>.intern-liste{{display:grid;gap:12px;padding:0;margin:24px 0 0;list-style:none;counter-reset:n}}.intern-liste li{{counter-increment:n;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px 18px 66px;position:relative}}.intern-liste li::before{{content:counter(n);position:absolute;left:18px;top:16px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 .95rem var(--font-d)}}.intern-liste b{{display:block;margin-bottom:4px}}.intern-liste span{{color:var(--ink-2);font-size:.96rem}}.intern-liste em{{display:inline-block;margin-top:8px;font-style:normal;font-size:.78rem;font-weight:650;background:var(--paper);border-radius:999px;padding:3px 10px}}</style>'.replace('{{', '{').replace('}}', '}')
+    schreibe('/intern/', seite('/intern/', 'Abstimmung (intern) | TKL', 'Interner Arbeitsstand.', inhalt, extra_head=extra, body_attr=' data-kein-tracking'))

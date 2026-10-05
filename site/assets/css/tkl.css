@@ -213,7 +213,7 @@ body.nav-offen .burger span:nth-child(3) { transform: translateY(-5px) rotate(-4
 .seitenkopf .grid-2 { align-items: center; }
 .seitenkopf-bild { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 4 / 3; box-shadow: var(--shadow-l); }
 .seitenkopf-bild img { width: 100%; height: 100%; object-fit: cover; }
-.seitenkopf-bild.illu::after { content: "Illustration"; position: absolute; right: 14px; bottom: 14px; background: rgba(255, 255, 255, .88); padding: 5px 10px; border-radius: 999px; font-size: .72rem; font-weight: 600; letter-spacing: .04em; color: var(--muted); }
+.lk-bild.illu::after, .seitenkopf-bild.illu::after { content: "Illustration"; position: absolute; right: 14px; bottom: 14px; background: rgba(255, 255, 255, .88); padding: 5px 10px; border-radius: 999px; font-size: .72rem; font-weight: 600; letter-spacing: .04em; color: var(--muted); }
 .brot { display: flex; flex-wrap: wrap; gap: 6px; font-size: .86rem; color: var(--muted); margin-bottom: 22px; padding: 0; list-style: none; }
 .brot a { text-decoration: none; } .brot a:hover { color: var(--ink); text-decoration: underline; }
 .brot li + li::before { content: "/"; margin-right: 6px; opacity: .5; }
@@ -359,6 +359,8 @@ body.nav-offen .burger span:nth-child(3) { transform: translateY(-5px) rotate(-4
 .detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(28px, 4vw, 64px); align-items: start; }
 .box { background: #fff; border-radius: var(--radius); padding: clamp(24px, 3vw, 36px); box-shadow: var(--shadow); }
 .box + .box { margin-top: 20px; }
+.grid-2 > .box, .grid-3 > .box { margin-top: 0; }
+.marke.hell .marke-text b { color: #fff; } .marke.hell .marke-text small { color: rgba(255, 255, 255, .6); }
 .seitenleiste { position: sticky; top: 100px; display: grid; gap: 16px; }
 .kontaktkarte { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 28px; }
 .kontaktkarte p { color: rgba(255, 255, 255, .75); font-size: .95rem; }

@@ -49,7 +49,7 @@ def logo_mark(farbe='#15191C', rot='#D8231C', gruen='#1E9E4A', blau='#2E8BD8', t
 
 def marke(hell=False, link='/'):
     f = '#FFFFFF' if hell else '#15191C'
-    return f'''<a class="marke" href="{link}" aria-label="TKL GmbH – zur Startseite">{logo_mark(f, '#E8352D' if hell else '#D8231C', '#2DB35C' if hell else '#1E9E4A', '#4AA3EA' if hell else '#2E8BD8', False)}<span class="marke-text"><b>TKL</b><small>Grünpflege · Winterdienst · Spielplätze</small></span></a>'''
+    return f'''<a class="marke{' hell' if hell else ''}" href="{link}" aria-label="TKL GmbH – zur Startseite">{logo_mark(f, '#E8352D' if hell else '#D8231C', '#2DB35C' if hell else '#1E9E4A', '#4AA3EA' if hell else '#2E8BD8', False)}<span class="marke-text"><b>TKL</b><small>Grünpflege · Winterdienst · Spielplätze</small></span></a>'''
 
 # ---------- Hecke (Anspielung auf die Fahrzeugbeklebung) ----------
 def hecke():
