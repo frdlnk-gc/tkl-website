@@ -112,6 +112,73 @@
     if (a) window.tklTrack('cta');
   });
 
+
+  // Sticker schweben beim Scrollen leicht mit
+  var par = [].slice.call(document.querySelectorAll('[data-parallax]'));
+  if (par.length && !matchMedia('(prefers-reduced-motion: reduce)').matches && !document.documentElement.classList.contains('statisch')) {
+    var tick = false;
+    var bewege = function () { tick = false; par.forEach(function (el) { var r = el.getBoundingClientRect(); var mitte = r.top + r.height / 2 - innerHeight / 2; el.style.translate = '0 ' + (mitte * parseFloat(el.dataset.parallax)).toFixed(1) + 'px'; }); };
+    window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(bewege); } }, { passive: true }); bewege();
+  }
+
+  // Jahreskalender: aktuellen Monat hervorheben und Text setzen
+  var kal = document.querySelector('[data-kalender]');
+  if (kal) {
+    var m = new Date().getMonth();
+    kal.querySelectorAll('[data-m="' + m + '"]').forEach(function (z) { z.classList.add('jetzt'); });
+    var texte = JSON.parse(kal.dataset.kalender);
+    var ziel = kal.querySelector('[data-jetzt-text]'); if (ziel) ziel.textContent = texte[m];
+    var mn = kal.querySelector('[data-jetzt-monat]'); if (mn) mn.textContent = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'][m];
+  }
+
+  // Rückruf-Box
+  var rr = document.querySelector('.rueckruf');
+  if (rr) {
+    var auf = function (o) { rr.classList.toggle('offen', o); rr.querySelector('.rueckruf-knopf').setAttribute('aria-expanded', o ? 'true' : 'false'); if (o) { setTimeout(function () { var i = rr.querySelector('input[name=name]'); if (i) i.focus(); }, 250); if (window.tklTrack) window.tklTrack('cta'); } };
+    rr.querySelector('.rueckruf-knopf').addEventListener('click', function () { auf(!rr.classList.contains('offen')); });
+    rr.querySelector('.rueckruf-zu').addEventListener('click', function () { auf(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') auf(false); });
+    var f = rr.querySelector('form'), t0 = Date.now();
+    f.addEventListener('submit', function (e) {
+      e.preventDefault(); var msg = f.querySelector('.f-fehler'); msg.textContent = '';
+      if (!f.name.value.trim() || f.telefon.value.replace(/\D/g, '').length < 6) { msg.textContent = 'Bitte Name und Telefonnummer angeben.'; return; }
+      var b = f.querySelector('button'); b.disabled = true;
+      fetch(API + '/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ typ: f.dataset.typ, name: f.name.value, telefon: f.telefon.value, datenschutz: f.datenschutz.checked, dauer: Date.now() - t0, website: f.website.value, quelle: location.pathname.replace(/^\/tkl-website(?=\/)/, ''), nachricht: 'Rückruf gewünscht' + (f.zeit.value ? ' – ' + f.zeit.value : ''), daten: { rueckruf: 'Ja', zeit: f.zeit.value || 'egal' } }) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.fehler); }); })
+        .then(function () { f.outerHTML = '<p style="margin:0"><b>Danke!</b> Wir rufen Sie so schnell wie möglich zurück.</p>'; })
+        .catch(function (err) { msg.textContent = err.message || 'Hat nicht geklappt – bitte rufen Sie uns an.'; b.disabled = false; });
+    });
+  }
+
+
+  // Stimmen: Vorschau beim Überfahren, Klick öffnet Player mit Ton + Untertiteln
+  var basis = (location.pathname.match(/^\/tkl-website(?=\/)/) || [''])[0];
+  document.querySelectorAll('.stimme[data-video]').forEach(function (k) {
+    var src = basis + '/assets/video/' + k.dataset.video;
+    if (matchMedia('(hover: hover)').matches) {
+      var v;
+      k.addEventListener('mouseenter', function () {
+        if (!v) { v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto'; v.src = src + '.mp4'; v.setAttribute('aria-hidden', 'true'); k.insertBefore(v, k.querySelector('.stimme-text')); }
+        v.currentTime = 0; v.play().catch(function () {});
+      });
+      k.addEventListener('mouseleave', function () { if (v) v.pause(); });
+    }
+    k.addEventListener('click', function () {
+      var d = document.querySelector('.vid-dialog');
+      if (!d) { d = document.createElement('dialog'); d.className = 'vid-dialog'; d.innerHTML = '<button class="vid-zu" type="button" aria-label="Video schließen">×</button><video controls playsinline preload="auto" crossorigin="anonymous"></video><p class="vid-titel"></p>'; document.body.appendChild(d);
+        d.querySelector('.vid-zu').addEventListener('click', function () { d.close(); });
+        d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+        d.addEventListener('close', function () { d.querySelector('video').pause(); }); }
+      var vid = d.querySelector('video');
+      vid.innerHTML = '<source src="' + src + '.mp4" type="video/mp4"><track kind="subtitles" srclang="de" label="Deutsch" src="' + src + '.vtt" default>';
+      vid.poster = src + '-poster.webp'; vid.load();
+      d.querySelector('.vid-titel').innerHTML = '<b>' + (k.dataset.titel || '') + '</b>' + (k.dataset.untertitel || '');
+      d.showModal(); vid.play().catch(function () {});
+      if (vid.textTracks[0]) vid.textTracks[0].mode = 'showing';
+      if (window.tklTrack) window.tklTrack('cta');
+    });
+  });
+
   // Jahr im Footer
   document.querySelectorAll('[data-jahr]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

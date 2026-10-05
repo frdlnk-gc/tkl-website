@@ -7,6 +7,26 @@ def alle(g):
     ueber_uns(); karriere(); kontakt(); impressum(); datenschutz(); fehlerseite(); intern(); weiterleitungen()
 
 
+# ---------- Video-Karten ----------
+STIMMEN = {
+ 'ralf-vorstellung': ('„Wir sind 50 Leute in 10 bis 12 Kolonnen.“', 'Ralf Jung · Geschäftsführer', '1:25'),
+ 'ralf-angebot': ('„Sprecht uns an – wir machen euch gern ein Angebot.“', 'Ralf Jung · Geschäftsführer', '0:12'),
+ 'stimme-duo': ('„Wir sind ein eingespieltes Team.“', 'Vorarbeiter-Duo · seit 2007 zusammen', '0:41'),
+ 'stimme-20-jahre': ('„Die Chefs lassen uns nicht im Stich.“', 'Grischa · bald 20 Jahre bei TKL', '0:33'),
+ 'stimme-grischa': ('„Wir haben eine tolle Truppe.“', 'Grischa · Kolonne Grünpflege', '1:00'),
+ 'stimme-kai': ('„Die Pause ist immer das Beste.“', 'Kai · über 30 Jahre bei TKL', '0:43'),
+ 'stimme-nail': ('„Ich mag alles an meinem Job.“', 'Nail · Grünpflege, seit 3,5 Jahren', '1:02'),
+ 'gruenpflege-20000': ('„20.000 Quadratmeter an einem Tag.“', 'Kolonne in Duisburg-Walsum', '0:26'),
+ 'grischa-km': ('„15, 16 Kilometer am Tag.“', 'Grischa · zu Fuß mit dem Freischneider', '0:20'),
+}
+def stimme(name, extra=''):
+    z, u, d = STIMMEN[name]
+    return (f'<button type="button" class="stimme{extra}" data-video="{name}" data-titel="{esc(z)}" data-untertitel="{esc(u)}" aria-label="Video ansehen: {esc(u)}">'
+            f'<img src="/assets/video/{name}-poster.webp" alt="" loading="lazy" width="720" height="1280">'
+            f'<span class="stimme-text"><span class="stimme-meta"><span class="stimme-play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><span class="stimme-dauer">{d}</span></span>'
+            f'<b>{z}</b><span class="stimme-wer">{u}</span></span></button>')
+
+
 # =====================================================================
 # STARTSEITE
 # =====================================================================
@@ -22,9 +42,9 @@ def startseite():
 <section class="hero" aria-labelledby="hero-titel">
 <div class="wrap hero-grid">
 <div>
-<span class="eyebrow">Duisburg · Essen · Castrop-Rauxel</span>
+<span class="eyebrow">Duisburg · Castrop-Rauxel · Ruhrgebiet</span>
 <h1 id="hero-titel">Gepflegtes Grün. Sichere Wege. <span class="pinsel">Das ganze Jahr.</span></h1>
-<p class="lead">TKL pflegt die Außenanlagen von Wohnungsgenossenschaften, Immobilienunternehmen und Firmen im Ruhrgebiet – mit festen Kolonnen, eigenem Maschinenpark und kurzen Wegen von drei Standorten aus.</p>
+<p class="lead">TKL pflegt die Außenanlagen von Wohnungsgenossenschaften, Immobilienunternehmen und Firmen im Ruhrgebiet – mit festen Kolonnen, eigenem Maschinenpark und kurzen Wegen von zwei Standorten aus.</p>
 <div class="btn-reihe"><a class="btn" href="/kontakt/#anfrage">Anfrage stellen {ic('pfeil', 'pfeil')}</a><a class="btn rand" href="/leistungen/">Leistungen ansehen</a></div>
 <ul class="hero-chips">
 <li><span class="ic gruen" style="border-radius:50%;width:30px;height:30px;display:grid;place-items:center">{ic('team')}</span>Feste Kolonne je Objekt</li>
@@ -34,19 +54,20 @@ def startseite():
 </div>
 <div class="hero-bild">
 <div class="hero-foto">{bild('siedlung-hecke', 'TKL-Mitarbeiter mäht mit einem roten Aufsitzmäher die Rasenfläche einer Wohnsiedlung, daneben eine gepflegte Hecke', '(max-width: 980px) 100vw, 52vw', eager=True)}</div>
-{sticker('duo', 'Zwei TKL-Kollegen in roter Arbeitskleidung, Arm in Arm', 'hero-sticker', eager=True)}
-<span class="blase" aria-hidden="true">Wir kümmern uns!</span>
-<div class="hero-karte"><span class="punkt" style="color:var(--green-dark)">{ic('kalender')}</span><span><b>Pflege nach festem Plan</b><span>Gleiche Kolonne, gleiche Abläufe – jede Woche.</span></span></div>
+<div class="sticker-gruppe" data-parallax="-0.06">{sticker('duo', 'Zwei TKL-Kollegen in roter Arbeitskleidung, Arm in Arm', 'hero-sticker', eager=True)}<span class="blase" aria-hidden="true">Wir kümmern uns!</span></div>
+<div class="live-clip" data-parallax="0.05"><span class="badge"><span class="lang">Unterwegs mit der Kolonne</span><span class="kurz">Unterwegs</span></span><video autoplay muted loop playsinline preload="metadata" poster="/assets/video/kolonne-live-poster.webp" aria-label="Kurzer Clip: TKL-Kolonne beim Mähen und Freischneiden"><source src="/assets/video/kolonne-live.mp4" type="video/mp4"></video></div>
 </div>
 </div>
 </section>
 
-<section class="sec eng" aria-label="TKL in Zahlen" style="padding-top:0">
+<div class="laufband" aria-hidden="true"><div class="band-spur">{"".join(f"<span>{t}<i></i></span>" for t in (["Rasen mähen", "Hecken schneiden", "Laub blasen", "Wege kehren", "Spielplätze prüfen", "Bäume pflegen", "Schnee räumen", "Streuen", "Rasen anlegen", "Pflaster legen"] * 2))}</div></div>
+
+<section class="sec eng" aria-label="TKL in Zahlen" style="padding-top:clamp(40px,5vw,64px)">
 <div class="wrap"><div class="zahlen rv">
-<div class="zahl"><b><span data-zahl="3">3</span></b><span>Standorte im Ruhrgebiet – Duisburg, Essen, Castrop-Rauxel</span></div>
-<div class="zahl"><b><span data-zahl="8">8</span></b><span>Pflegekolonnen sind in der Saison täglich draußen</span></div>
+<div class="zahl"><b><span data-zahl="50">50</span></b><span>Mitarbeiter – im Winterdienst ist die ganze Mannschaft draußen</span></div>
+<div class="zahl"><b>10–12</b><span>feste Kolonnen, jede mit ihren eigenen Objekten</span></div>
 <div class="zahl"><b><span data-zahl="25">25</span></b><span>eigene Fahrzeuge plus moderner Maschinenpark</span></div>
-<div class="zahl"><b><span data-zahl="20">20</span><em>+</em></b><span>Jahre – so lange sind einige Kollegen schon bei TKL</span></div>
+<div class="zahl"><b><span data-zahl="30">30</span><em>+</em></b><span>Jahre – so lange ist Kai schon bei TKL</span></div>
 </div></div>
 </section>
 
@@ -60,11 +81,32 @@ def startseite():
 </div>
 </section>
 
+
+<section class="sec" aria-labelledby="kal-titel" style="padding-top:0">
+<div class="wrap">
+<div class="sec-kopf split rv"><div><span class="eyebrow">Das ganze Jahr im Einsatz</span><h2 id="kal-titel">Was gerade bei uns <span class="pinsel gruen">passiert</span>.</h2></div>
+<p class="lead">Grünpflege hat Saison, Winterdienst auch. Unser Jahr im Überblick – der aktuelle Monat ist markiert.</p></div>
+<div class="kalender rv" data-kalender='["Im Januar sind unsere Teams im Winterdienst unterwegs und schneiden Gehölze – das geht nur in der kalten Jahreszeit.", "Im Februar räumen und streuen wir bei Glätte und nutzen die letzten Wochen für den großen Gehölzschnitt.", "Im März startet die Saison: erste Rasenpflege, Pflanzungen und die Vorbereitung der Flächen fürs Frühjahr.", "Im April wächst alles – unsere Kolonnen sind im festen Rhythmus mit Mähern und Freischneidern draußen.", "Im Mai ist Hochsaison für die Rasenpflege. Jede Anlage bekommt ihre Kolonne nach Plan.", "Im Juni mähen wir in kurzen Abständen und bringen Hecken mit dem Formschnitt in Form.", "Im Juli ist Sommer in den Siedlungen: Rasenpflege, Bewässerung neuer Flächen und Formschnitt.", "Im August geht die Rasenpflege weiter – und wir planen schon die Winterdienst-Touren.", "Im September beginnt die Pflanzzeit. Ein guter Moment, um Neuanlagen und den Winterdienst zu beauftragen.", "Im Oktober sind unsere Kolonnen vor allem mit Laub und Gehölzschnitt beschäftigt – und machen die Fahrzeuge winterfest.", "Im November ist Laubzeit und der Winterdienst steht bereit, sobald der erste Frost kommt.", "Im Dezember räumen und streuen wir früh am Morgen – damit Ihre Wege sicher sind."]'>
+<div class="kal-raster" role="table" aria-label="Leistungen nach Monaten">
+<span></span><span class="kal-monat" data-m="0">Jan</span><span class="kal-monat" data-m="1">Feb</span><span class="kal-monat" data-m="2">Mär</span><span class="kal-monat" data-m="3">Apr</span><span class="kal-monat" data-m="4">Mai</span><span class="kal-monat" data-m="5">Jun</span><span class="kal-monat" data-m="6">Jul</span><span class="kal-monat" data-m="7">Aug</span><span class="kal-monat" data-m="8">Sep</span><span class="kal-monat" data-m="9">Okt</span><span class="kal-monat" data-m="10">Nov</span><span class="kal-monat" data-m="11">Dez</span>
+<span class="kal-name">{ic('blatt')} Rasenpflege</span><span class="kal-zelle" data-m="0" style="--c:var(--green)"></span><span class="kal-zelle" data-m="1" style="--c:var(--green)"></span><span class="kal-zelle an halb" data-m="2" style="--c:var(--green)"></span><span class="kal-zelle an" data-m="3" style="--c:var(--green)"></span><span class="kal-zelle an" data-m="4" style="--c:var(--green)"></span><span class="kal-zelle an" data-m="5" style="--c:var(--green)"></span><span class="kal-zelle an" data-m="6" style="--c:var(--green)"></span><span class="kal-zelle an" data-m="7" style="--c:var(--green)"></span><span class="kal-zelle an" data-m="8" style="--c:var(--green)"></span><span class="kal-zelle an" data-m="9" style="--c:var(--green)"></span><span class="kal-zelle an halb" data-m="10" style="--c:var(--green)"></span><span class="kal-zelle" data-m="11" style="--c:var(--green)"></span>
+<span class="kal-name">{ic('baum')} Hecken- & Gehölzschnitt</span><span class="kal-zelle an" data-m="0" style="--c:#2f8a4a"></span><span class="kal-zelle an" data-m="1" style="--c:#2f8a4a"></span><span class="kal-zelle" data-m="2" style="--c:#2f8a4a"></span><span class="kal-zelle" data-m="3" style="--c:#2f8a4a"></span><span class="kal-zelle" data-m="4" style="--c:#2f8a4a"></span><span class="kal-zelle an halb" data-m="5" style="--c:#2f8a4a"></span><span class="kal-zelle an halb" data-m="6" style="--c:#2f8a4a"></span><span class="kal-zelle an halb" data-m="7" style="--c:#2f8a4a"></span><span class="kal-zelle" data-m="8" style="--c:#2f8a4a"></span><span class="kal-zelle an" data-m="9" style="--c:#2f8a4a"></span><span class="kal-zelle an" data-m="10" style="--c:#2f8a4a"></span><span class="kal-zelle an" data-m="11" style="--c:#2f8a4a"></span>
+<span class="kal-name">{ic('besen')} Laub entfernen</span><span class="kal-zelle" data-m="0" style="--c:#c9922a"></span><span class="kal-zelle" data-m="1" style="--c:#c9922a"></span><span class="kal-zelle" data-m="2" style="--c:#c9922a"></span><span class="kal-zelle" data-m="3" style="--c:#c9922a"></span><span class="kal-zelle" data-m="4" style="--c:#c9922a"></span><span class="kal-zelle" data-m="5" style="--c:#c9922a"></span><span class="kal-zelle" data-m="6" style="--c:#c9922a"></span><span class="kal-zelle" data-m="7" style="--c:#c9922a"></span><span class="kal-zelle an halb" data-m="8" style="--c:#c9922a"></span><span class="kal-zelle an" data-m="9" style="--c:#c9922a"></span><span class="kal-zelle an" data-m="10" style="--c:#c9922a"></span><span class="kal-zelle an halb" data-m="11" style="--c:#c9922a"></span>
+<span class="kal-name">{ic('schnee')} Winterdienst</span><span class="kal-zelle an" data-m="0" style="--c:var(--blue)"></span><span class="kal-zelle an" data-m="1" style="--c:var(--blue)"></span><span class="kal-zelle an halb" data-m="2" style="--c:var(--blue)"></span><span class="kal-zelle" data-m="3" style="--c:var(--blue)"></span><span class="kal-zelle" data-m="4" style="--c:var(--blue)"></span><span class="kal-zelle" data-m="5" style="--c:var(--blue)"></span><span class="kal-zelle" data-m="6" style="--c:var(--blue)"></span><span class="kal-zelle" data-m="7" style="--c:var(--blue)"></span><span class="kal-zelle" data-m="8" style="--c:var(--blue)"></span><span class="kal-zelle" data-m="9" style="--c:var(--blue)"></span><span class="kal-zelle an" data-m="10" style="--c:var(--blue)"></span><span class="kal-zelle an" data-m="11" style="--c:var(--blue)"></span>
+<span class="kal-name">{ic('spiel')} Spielplatzkontrolle</span><span class="kal-zelle an" data-m="0" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="1" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="2" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="3" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="4" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="5" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="6" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="7" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="8" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="9" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="10" style="--c:var(--red)"></span><span class="kal-zelle an" data-m="11" style="--c:var(--red)"></span>
+<span class="kal-name">{ic('pflaster')} Pflanzen & Neuanlagen</span><span class="kal-zelle" data-m="0" style="--c:#8a6a3a"></span><span class="kal-zelle" data-m="1" style="--c:#8a6a3a"></span><span class="kal-zelle an" data-m="2" style="--c:#8a6a3a"></span><span class="kal-zelle an" data-m="3" style="--c:#8a6a3a"></span><span class="kal-zelle an halb" data-m="4" style="--c:#8a6a3a"></span><span class="kal-zelle" data-m="5" style="--c:#8a6a3a"></span><span class="kal-zelle" data-m="6" style="--c:#8a6a3a"></span><span class="kal-zelle" data-m="7" style="--c:#8a6a3a"></span><span class="kal-zelle an" data-m="8" style="--c:#8a6a3a"></span><span class="kal-zelle an" data-m="9" style="--c:#8a6a3a"></span><span class="kal-zelle an halb" data-m="10" style="--c:#8a6a3a"></span><span class="kal-zelle" data-m="11" style="--c:#8a6a3a"></span>
+</div>
+<div class="kal-legende"><span>Hauptsaison</span><span class="halb">je nach Wetter</span></div>
+<div class="kal-jetzt"><span class="punkt" data-jetzt-monat>Okt</span><p><b>Jetzt bei TKL:</b> <span data-jetzt-text>Im Oktober sind unsere Kolonnen vor allem mit Laub und Gehölzschnitt beschäftigt – und machen die Fahrzeuge winterfest.</span></p></div>
+</div>
+</div>
+</section>
+
 <section class="sec bg-weiss" aria-labelledby="usp-titel">
 <div class="wrap grid-2">
 <div class="bild-stapel rv">
 <div class="haupt">{bild('kolonne-aktion', 'Eine TKL-Kolonne bei der Arbeit: ein Mitarbeiter mit Freischneider am Baum, im Hintergrund ein Kollege auf dem Aufsitzmäher', '(max-width: 980px) 100vw, 50vw')}</div>
-<div class="zitatkarte"><b>Gleiche Kolonne.</b>Seit Jahren dieselben Leute bei denselben Kunden – sie kennen jede Ecke und jeden Ablauf.</div>
+<div class="zitatkarte unten"><b>Gleiche Kolonne.</b>Seit Jahren dieselben Leute bei denselben Kunden – sie kennen jede Ecke und jeden Ablauf.</div>
 {sticker('blasen', 'TKL-Mitarbeiter mit Laubbläser')}
 </div>
 <div>
@@ -74,7 +116,7 @@ def startseite():
 <div class="usp-liste">
 <div class="usp rv"><span class="ic gruen">{ic('team')}</span><div><h3>Immer dieselbe Kolonne</h3><p>Ihre Mitarbeiter kennen das Objekt, die Mieter und die Besonderheiten. Eingespielte Abläufe – und schnell wieder vom Hof.</p></div></div>
 <div class="usp rv d1"><span class="ic rot">{ic('traktor')}</span><div><h3>Profi-Maschinen statt Kleingerät</h3><p>Aufsitzmäher, Kehrmaschinen, Freischneider und Laubbläser in Profi-Qualität: große Flächen sind schneller und sauberer fertig.</p></div></div>
-<div class="usp rv d2"><span class="ic blau">{ic('pin')}</span><div><h3>Kurze Wege im Ruhrgebiet</h3><p>Von Duisburg, Essen und Castrop-Rauxel aus sind wir schnell vor Ort – auch, wenn im Winter nachts Glätte kommt.</p></div></div>
+<div class="usp rv d2"><span class="ic blau">{ic('pin')}</span><div><h3>Kurze Wege im Ruhrgebiet</h3><p>Von Duisburg und Castrop-Rauxel aus sind wir schnell vor Ort – auch, wenn im Winter nachts Glätte kommt.</p></div></div>
 <div class="usp rv d3"><span class="ic sand">{ic('schild')}</span><div><h3>Erfahrene Leute, die bleiben</h3><p>Viele Kollegen sind seit über 20 Jahren dabei. Diese Erfahrung merken Sie an der Qualität – und an der Ruhe auf der Baustelle.</p></div></div>
 </div>
 </div>
@@ -113,13 +155,12 @@ def startseite():
 <div>
 <span class="eyebrow">Einsatzgebiet</span>
 <h2 id="gebiet-titel">Zu Hause im <span class="pinsel gruen">Ruhrgebiet</span>.</h2>
-<p class="lead">Unsere Kolonnen starten jeden Morgen von drei Standorten. So sind wir in allen Städten zwischen Rhein und Dortmund schnell bei Ihnen.</p>
+<p class="lead">Von Duisburg aus betreuen wir das westliche, von Castrop-Rauxel aus das östliche Ruhrgebiet. Im Winterdienst sind wir zusätzlich bis nach Remscheid unterwegs.</p>
 <div class="standorte">
-<div class="standort rv"><span class="nr" style="background:var(--red)">1</span><div><b>Zentrale Duisburg</b><span>Hochstraße 184, 47228 Duisburg</span></div></div>
-<div class="standort rv d1"><span class="nr" style="background:var(--green)">2</span><div><b>Ruhrgebiet-West · Essen</b><span>Bunsenstraße 30, 45145 Essen</span></div></div>
-<div class="standort rv d2"><span class="nr" style="background:var(--blue)">3</span><div><b>Ruhrgebiet-Ost · Castrop-Rauxel</b><span>Oststraße 25, 44575 Castrop-Rauxel</span></div></div>
+<div class="standort rv"><span class="nr" style="background:var(--red)">1</span><div><b>Zentrale Duisburg · westliches Ruhrgebiet</b><span>Hochstraße 184, 47228 Duisburg</span></div></div>
+<div class="standort rv d2"><span class="nr" style="background:var(--green)">2</span><div><b>Niederlassung Castrop-Rauxel · östliches Ruhrgebiet</b><span>Oststraße 25, 44575 Castrop-Rauxel</span></div></div>
 </div>
-<ul class="staedte" aria-label="Städte im Einsatzgebiet"><li>Duisburg</li><li>Essen</li><li>Oberhausen</li><li>Mülheim</li><li>Bottrop</li><li>Gelsenkirchen</li><li>Bochum</li><li>Herne</li><li>Castrop-Rauxel</li><li>Dortmund</li><li>Moers</li><li>Remscheid</li></ul>
+<ul class="staedte" aria-label="Städte im Einsatzgebiet"><li>Duisburg</li><li>Essen</li><li>Oberhausen</li><li>Mülheim</li><li>Bottrop</li><li>Gelsenkirchen</li><li>Bochum</li><li>Herne</li><li>Castrop-Rauxel</li><li>Dortmund</li><li>Moers</li><li>Remscheid (Winterdienst)</li></ul>
 </div>
 <div class="karte rv">{karte()}</div>
 </div>
@@ -156,6 +197,14 @@ def startseite():
 <div class="schritt rv d2"><h3>Angebot</h3><p>Sie bekommen ein klares Angebot mit allen Leistungen – ohne versteckte Positionen.</p></div>
 <div class="schritt rv d3"><h3>Feste Kolonne</h3><p>Ihre Kolonne übernimmt – und kommt ab dann regelmäßig nach Plan.</p></div>
 </div>
+</div>
+</section>
+
+<section class="sec" aria-labelledby="kennen-titel">
+<div class="wrap">
+<div class="sec-kopf split rv"><div><span class="eyebrow">Lernen Sie uns kennen</span><h2 id="kennen-titel">Die Leute hinter Ihrer <span class="pinsel">Grünpflege</span>.</h2></div>
+<p class="lead">Keine Werbesprüche: Hier erzählen unser Geschäftsführer und die Kolonnen selbst, wie sie arbeiten. Mit Ton und Untertiteln.</p></div>
+<div class="stimmen vier rv">{stimme('ralf-vorstellung')}{stimme('stimme-duo')}{stimme('gruenpflege-20000')}{stimme('stimme-kai')}</div>
 </div>
 </section>
 
@@ -198,7 +247,7 @@ def leistungen_uebersicht():
 <div class="kachel rv d3"><h3>{ic('stadt')} Öffentliche Flächen</h3><p>Grün- und Verkehrsflächen für Kommunen und öffentliche Einrichtungen.</p></div>
 </div></div></section>
 {cta_hecke()}'''
-    schreibe('/leistungen/', seite('/leistungen/', 'Leistungen: Grünpflege, Winterdienst, Spielplätze | TKL GmbH Ruhrgebiet', 'Grünpflege, Winterdienst, Spielplatzpflege, Baumpflege sowie Neubau und Sanierung von Außenanlagen für Wohnungsunternehmen und Firmen in Duisburg, Essen und dem Ruhrgebiet.', inhalt, 'leistungen'))
+    schreibe('/leistungen/', seite('/leistungen/', 'Leistungen: Grünpflege, Winterdienst, Spielplätze | TKL GmbH Ruhrgebiet', 'Grünpflege, Winterdienst, Spielplatzpflege, Baumpflege sowie Neubau und Sanierung von Außenanlagen für Wohnungsunternehmen und Firmen in Duisburg, Castrop-Rauxel und dem ganzen Ruhrgebiet.', inhalt, 'leistungen'))
 
 
 # =====================================================================
@@ -278,6 +327,8 @@ def leistung(l):
         n, a = d['bildzeile']
         gal = f'<div class="grid-2" style="margin-top:20px;gap:20px;align-items:stretch"><figure class="foto-rund rv" style="margin:0;aspect-ratio:4/5">{bild(n, a, "(max-width: 980px) 100vw, 30vw")}</figure><div class="box rv d1" style="margin:0;display:flex;flex-direction:column;justify-content:center"><span class="eyebrow">Aus unserem Fuhrpark</span><h3>Eigene Kehrmaschinen und Streutechnik</h3><p class="muted" style="margin:0">Im Winter rücken unsere Kehrmaschinen und Streufahrzeuge vom eigenen Betriebshof aus. Gepflegt und gewartet in der eigenen Halle – damit sie laufen, wenn es drauf ankommt.</p></div></div>'
     hinweis = f'<div class="hinweis rv" style="margin-top:20px">{ic("info")}<p>{d["hinweis"]}</p></div>' if d.get('hinweis') else ''
+    if s == 'gruenpflege':
+        hinweis += f'<div class="box rv" style="margin-top:20px"><span class="eyebrow">Aus der Kolonne</span><h3>20.000 Quadratmeter an einem Tag</h3><p class="muted">In einer Siedlung in Duisburg-Walsum erzählt die Kolonne, wie sie eine ganze Anlage an einem Tag mäht, freischneidet und sauber hinterlässt – und wer dabei die meisten Schritte macht.</p><div class="stimmen zwei">{stimme("gruenpflege-20000")}{stimme("grischa-km")}</div></div>'
     andere = ''.join(f'<a href="/leistungen/{s2}/"{" aria-current=" + chr(34) + "page" + chr(34) if s2 == s else ""}>{t2} {ic("pfeil")}</a>' for s2, t2, *_ in LEISTUNGEN)
     inhalt = f'''
 <section class="seitenkopf"><div class="wrap">
@@ -312,7 +363,7 @@ def ueber_uns():
 {brot(('Über uns', None))}
 <div class="grid-2">
 <div><span class="eyebrow">Über TKL</span><h1>Ein Team aus dem Revier – für die <span class="pinsel gruen">Grünflächen</span> im Revier.</h1>
-<p class="lead">Die TKL GmbH pflegt seit vielen Jahren Außenanlagen im Ruhrgebiet. Von unserer Zentrale in Duisburg und unseren Niederlassungen in Essen und Castrop-Rauxel aus sind täglich unsere Kolonnen unterwegs – für Genossenschaften, Wohnungsunternehmen und Firmen.</p></div>
+<p class="lead">Die TKL GmbH pflegt seit vielen Jahren Außenanlagen im Ruhrgebiet. Von unserer Zentrale in Duisburg und der Niederlassung in Castrop-Rauxel aus sind täglich rund 50 Mitarbeiter in 10 bis 12 Kolonnen unterwegs – für Genossenschaften, Wohnungsunternehmen und Firmen.</p></div>
 <div class="seitenkopf-bild">{bild('kollegen-duo', 'Zwei langjährige TKL-Kollegen in Arbeitskleidung stehen Arm in Arm auf einer Rasenfläche', '(max-width: 980px) 100vw, 50vw', eager=True)}</div>
 </div></div></section>
 
@@ -326,7 +377,7 @@ def ueber_uns():
 </div></div></section>
 
 <section class="sec bg-weiss"><div class="wrap grid-2">
-<figure class="portraet rv" style="margin:0">{bild('geschaeftsfuehrung', 'Geschäftsführer der TKL GmbH im Büro in Duisburg', '(max-width: 980px) 100vw, 45vw')}<figcaption><b>Ralf Jung</b>Geschäftsführung · TKL GmbH</figcaption></figure>
+<div class="rv" style="max-width:360px;justify-self:center;width:100%">{stimme('ralf-vorstellung')}</div>
 <div><span class="eyebrow">Unsere Haltung</span><h2>Wir machen, was wir können. Und das richtig.</h2>
 <p class="lead">TKL ist kein Bauchladen. Wir konzentrieren uns auf das, worin wir stark sind: große Grünflächen pflegen, Winterdienst fahren, Spielplätze sicher halten. Dafür haben wir eingespielte Teams, gute Maschinen und kurze Wege.</p>
 <p>Unsere Kunden sind vor allem Wohnungsgenossenschaften, Immobilienunternehmen und Firmen im Ruhrgebiet. Viele davon begleiten wir seit Jahren – mit denselben Kolonnen, die ihre Anlagen in- und auswendig kennen.</p>
@@ -341,28 +392,29 @@ def ueber_uns():
 <figure class="rv d1">{bild('portrait-erfahren', 'Erfahrener TKL-Mitarbeiter mit Tragegurt lächelt in die Kamera', '(max-width: 640px) 50vw, 22vw')}</figure>
 <figure class="rv d2">{bild('portrait-jung', 'Junger TKL-Mitarbeiter mit Gehörschutz und Sonnenbrille lacht', '(max-width: 640px) 50vw, 22vw')}</figure>
 <figure class="rv d3">{bild('trimmer-pfosten', 'TKL-Mitarbeiter mit Freischneider an einem Weg mit Laternen', '(max-width: 640px) 50vw, 30vw')}</figure>
-</div></div></section>
+</div>
+<div class="stimmen vier rv" style="margin-top:28px">{stimme('stimme-duo')}{stimme('stimme-grischa')}{stimme('stimme-kai')}{stimme('stimme-nail')}</div>
+</div></section>
 
 <section class="sec bg-dunkel on-dark"><div class="wrap maschinen">
 <div><span class="eyebrow">Betriebshof Duisburg</span><h2>Unsere Halle, unsere Maschinen.</h2>
 <p class="lead">Aufsitzmäher, Kehrmaschinen, Streufahrzeuge und Transporter: Unser Fuhrpark steht in Duisburg und wird dort gewartet. Unsere Transporter erkennen Sie übrigens sofort – an der grünen Hecke und den Männern in Rot.</p>
-<div class="geraete"><div class="geraet">{ic('auto')} 25 Fahrzeuge</div><div class="geraet">{ic('team')} 8 Pflegekolonnen</div><div class="geraet">{ic('werkzeug')} Eigene Wartung</div><div class="geraet">{ic('pin')} 3 Standorte</div></div></div>
+<div class="geraete"><div class="geraet">{ic('auto')} 25 Fahrzeuge</div><div class="geraet">{ic('team')} 10–12 Kolonnen</div><div class="geraet">{ic('werkzeug')} Eigene Wartung</div><div class="geraet">{ic('pin')} 3 Standorte</div></div></div>
 <div class="video-paar">
 <div class="foto-rund rv" style="aspect-ratio:3/4">{bild('fuhrpark-transporter', 'TKL-Transporter mit Heckenmotiv-Beklebung neben einem Aufsitzmäher in der Fahrzeughalle', '(max-width: 980px) 50vw, 22vw', pos='35% center')}</div>
 <div class="video-rahmen rv d1"><span class="badge">Rundgang Halle</span><video data-auto muted loop playsinline preload="none" poster="/assets/video/betriebshof-poster.webp" aria-label="Rundgang durch die Maschinenhalle der TKL"><source src="/assets/video/betriebshof.mp4" type="video/mp4"></video></div>
 </div></div></section>
 
 <section class="sec"><div class="wrap gebiet">
-<div><span class="eyebrow">Standorte</span><h2>Dreimal im Ruhrgebiet.</h2><p class="lead">Kurze Anfahrt, schnelle Reaktion: Unsere Teams starten dort, wo Ihre Objekte sind.</p>
+<div><span class="eyebrow">Standorte</span><h2>Zweimal im Ruhrgebiet.</h2><p class="lead">Kurze Anfahrt, schnelle Reaktion: Unsere Teams starten dort, wo Ihre Objekte sind.</p>
 <div class="standorte">
-<div class="standort"><span class="nr" style="background:var(--red)">1</span><div><b>Zentrale Duisburg</b><span>Hochstraße 184, 47228 Duisburg</span></div></div>
-<div class="standort"><span class="nr" style="background:var(--green)">2</span><div><b>Ruhrgebiet-West · Essen</b><span>Bunsenstraße 30, 45145 Essen</span></div></div>
-<div class="standort"><span class="nr" style="background:var(--blue)">3</span><div><b>Ruhrgebiet-Ost · Castrop-Rauxel</b><span>Oststraße 25, 44575 Castrop-Rauxel</span></div></div>
+<div class="standort"><span class="nr" style="background:var(--red)">1</span><div><b>Zentrale Duisburg · westliches Ruhrgebiet</b><span>Hochstraße 184, 47228 Duisburg</span></div></div>
+<div class="standort"><span class="nr" style="background:var(--green)">2</span><div><b>Niederlassung Castrop-Rauxel · östliches Ruhrgebiet</b><span>Oststraße 25, 44575 Castrop-Rauxel</span></div></div>
 </div></div>
 <div class="karte rv">{karte()}</div>
 </div></section>
 {cta_hecke('Lernen Sie uns kennen – <span class="pinsel gruen">vor Ort</span>.', 'Wir kommen vorbei, schauen uns Ihre Flächen an und sagen Ihnen ehrlich, was wir für Sie tun können.', 'Termin anfragen')}'''
-    schreibe('/ueber-uns/', seite('/ueber-uns/', 'Über uns – TKL GmbH aus Duisburg | Grünpflege im Ruhrgebiet', 'Die TKL GmbH aus Duisburg: feste Kolonnen, eigener Maschinenpark und drei Standorte im Ruhrgebiet. Lernen Sie das Team hinter der Grünpflege kennen.', inhalt, 'ueber'))
+    schreibe('/ueber-uns/', seite('/ueber-uns/', 'Über uns – TKL GmbH aus Duisburg | Grünpflege im Ruhrgebiet', 'Die TKL GmbH aus Duisburg: feste Kolonnen, eigener Maschinenpark und zwei Standorte im Ruhrgebiet. Lernen Sie das Team hinter der Grünpflege kennen.', inhalt, 'ueber'))
 
 
 # =====================================================================
@@ -432,11 +484,11 @@ def karriere():
 <h1 id="k-titel">Draußen arbeiten. In einem Team, das <span class="pinsel">zusammenhält</span>.</h1>
 <p class="lead">Bei TKL pflegst du Grünanlagen im ganzen Ruhrgebiet – mit Profi-Maschinen, deiner festen Kolonne und Chefs, die hinter dir stehen. Quereinsteiger sind herzlich willkommen.</p>
 <div class="btn-reihe"><a class="btn" href="#bewerben">In 1 Minute bewerben {ic('pfeil', 'pfeil')}</a><a class="btn rand" href="#stellen">Offene Stellen</a></div>
-<ul class="hero-chips"><li><span class="ic gruen" style="border-radius:50%;width:30px;height:30px;display:grid;place-items:center">{ic('haken')}</span>Ohne Lebenslauf</li><li><span class="ic gruen" style="border-radius:50%;width:30px;height:30px;display:grid;place-items:center">{ic('haken')}</span>Führerschein B reicht oft</li><li><span class="ic gruen" style="border-radius:50%;width:30px;height:30px;display:grid;place-items:center">{ic('haken')}</span>Start in Duisburg, Essen oder Castrop</li></ul>
+<ul class="hero-chips"><li><span class="ic gruen" style="border-radius:50%;width:30px;height:30px;display:grid;place-items:center">{ic('haken')}</span>Ohne Lebenslauf</li><li><span class="ic gruen" style="border-radius:50%;width:30px;height:30px;display:grid;place-items:center">{ic('haken')}</span>Führerschein B reicht oft</li><li><span class="ic gruen" style="border-radius:50%;width:30px;height:30px;display:grid;place-items:center">{ic('haken')}</span>Start in Duisburg oder Castrop-Rauxel</li></ul>
 </div>
-<div class="hero-bild"><div class="hero-foto">{bild('portrait-jung', 'Junger TKL-Mitarbeiter mit Gehörschutz und Sonnenbrille lacht in die Kamera', '(max-width: 980px) 100vw, 52vw', eager=True)}</div>
-{sticker('trimmer', 'TKL-Mitarbeiter mit Freischneider', 'hero-sticker', eager=True)}<span class="blase" aria-hidden="true">Komm in unser Team!</span>
-<div class="hero-karte"><span class="punkt" style="color:var(--red)">{ic('herz')}</span><span><b>Kollegen, die bleiben</b><span>Manche sind seit über 20 Jahren dabei.</span></span></div></div>
+<div class="hero-bild"><div class="hero-foto">{bild('portrait-jung', 'Nail, Mitarbeiter in der Grünpflege bei TKL, mit Gehörschutz und Sonnenbrille', '(max-width: 980px) 100vw, 52vw', eager=True)}</div>
+<div class="sticker-gruppe" data-parallax="-0.06">{sticker('trimmer', 'TKL-Mitarbeiter mit Freischneider', 'hero-sticker', eager=True)}<span class="blase" aria-hidden="true">Komm in unser Team!</span></div>
+<div class="hero-karte unten"><span class="punkt" style="color:var(--red)">{ic('herz')}</span><span><b>„Ich mag alles an meinem Job.“</b><span>Nail · seit 3,5 Jahren in der Grünpflege</span></span></div></div>
 </div></section>
 
 <section class="sec" style="padding-top:clamp(30px,4vw,60px)"><div class="wrap">
@@ -445,10 +497,15 @@ def karriere():
 <div class="benefit rv"><span class="ic gruen">{ic('team')}</span><h3>Deine feste Kolonne</h3><p>Du arbeitest jeden Tag mit denselben Kollegen. Wir stellen die Teams so zusammen, dass es passt.</p></div>
 <div class="benefit rv d1"><span class="ic rot">{ic('traktor')}</span><h3>Die besten Maschinen</h3><p>Aufsitzmäher, Profi-Freischneider, moderne Kehrmaschinen: Bei uns arbeitest du mit Gerät, das Spaß macht.</p></div>
 <div class="benefit rv d2"><span class="ic blau">{ic('sonne')}</span><h3>Arbeit das ganze Jahr</h3><p>Im Sommer Grünpflege, im Winter Winterdienst – bei uns gibt es keine Zwangspause, wenn das Gras nicht wächst.</p></div>
-<div class="benefit rv"><span class="ic sand">{ic('pin')}</span><h3>Kurze Wege</h3><p>Drei Standorte im Revier: Duisburg, Essen und Castrop-Rauxel. Du startest dort, wo es für dich passt.</p></div>
+<div class="benefit rv"><span class="ic sand">{ic('pin')}</span><h3>Kurze Wege</h3><p>Zwei Standorte im Revier: Duisburg und Castrop-Rauxel. Du startest dort, wo es für dich passt.</p></div>
 <div class="benefit rv d1"><span class="ic gruen">{ic('shirt')}</span><h3>Ausrüstung gestellt</h3><p>Arbeitskleidung, Gehörschutz und alles, was du draußen brauchst, bekommst du von uns.</p></div>
 <div class="benefit rv d2"><span class="ic rot">{ic('herz')}</span><h3>Chefs mit offenem Ohr</h3><p>Bei uns redet man miteinander. Viele Kollegen sind seit über 20 Jahren dabei – das sagt mehr als jeder Slogan.</p></div>
 </div></div></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap">
+<div class="sec-kopf split rv"><div><span class="eyebrow">Das sagen unsere Leute</span><h2>Frag nicht uns. <span class="pinsel">Frag die Kolonne.</span></h2></div><p class="lead">Grischa, Kai, Nail und die anderen erzählen, warum sie bei TKL arbeiten – manche seit über 30 Jahren.</p></div>
+<div class="stimmen vier rv">{stimme('stimme-nail')}{stimme('stimme-grischa')}{stimme('stimme-kai')}{stimme('stimme-duo')}</div>
+</div></section>
 
 <section class="sec bg-dunkel on-dark"><div class="wrap">
 <div class="sec-kopf split rv"><div><span class="eyebrow">Dein Arbeitstag</span><h2>So sieht ein Tag bei uns aus.</h2></div><p class="lead">Kein Büro, kein Fließband – sondern jeden Tag draußen und am Ende sehen, was man geschafft hat.</p></div>
@@ -471,10 +528,10 @@ def karriere():
       ('Brauche ich einen Lebenslauf?', 'Für den ersten Schritt nicht. Füll einfach das kurze Formular aus – wir rufen dich an und lernen dich kennen. Unterlagen klären wir später.'),
       ('Welchen Führerschein brauche ich?', 'Für viele Stellen reicht Klasse B. Für Kolonnenführer ist BE gut, weil oft mit Anhänger gefahren wird. Und wenn du noch keinen hast, bewirb dich trotzdem.'),
       ('Gibt es auch im Winter Arbeit?', 'Ja. Im Winter fahren wir Winterdienst für unsere Kunden. Für die Saison suchen wir zusätzlich Aushilfen.'),
-      ('Wo fange ich morgens an?', 'An einem unserer drei Standorte: Duisburg, Essen oder Castrop-Rauxel. Wo genau, besprechen wir mit dir – am liebsten möglichst nah an deinem Wohnort.')],
+      ('Wo fange ich morgens an?', 'An einem unserer Standorte: Duisburg oder Castrop-Rauxel. Wo genau, besprechen wir mit dir – am liebsten möglichst nah an deinem Wohnort.')],
      'Fragen zur Bewerbung', 'Gut zu wissen')}
 {cta_hecke('Lust auf Arbeit an der <span class="pinsel gruen">frischen Luft</span>?', 'Bewirb dich in einer Minute – ohne Lebenslauf. Oder ruf uns einfach an, wir freuen uns auf dich.', 'Jetzt bewerben', '#bewerben')}'''
-    schreibe('/karriere/', seite('/karriere/', 'Jobs Grünpflege & Winterdienst Ruhrgebiet | Karriere bei TKL', 'Jobs bei TKL in Duisburg, Essen und Castrop-Rauxel: Mitarbeiter Grünpflege, Kolonnenführer und Winterdienst. Quereinsteiger willkommen – in 1 Minute bewerben, ohne Lebenslauf.', inhalt, 'karriere', funnel=True))
+    schreibe('/karriere/', seite('/karriere/', 'Jobs Grünpflege & Winterdienst Ruhrgebiet | Karriere bei TKL', 'Jobs bei TKL in Duisburg und Castrop-Rauxel: Mitarbeiter Grünpflege, Kolonnenführer und Winterdienst. Quereinsteiger willkommen – in 1 Minute bewerben, ohne Lebenslauf.', inhalt, 'karriere', funnel=True))
 
 
 # =====================================================================
@@ -504,7 +561,7 @@ def kontakt():
     danke = f'<span class="haken-gross">{ic("haken")}</span><h3>Vielen Dank, Ihre Anfrage ist da!</h3><p class="lead" style="max-width:520px;margin:0 auto 22px">Wir prüfen Ihre Angaben und melden uns zeitnah bei Ihnen – in der Regel telefonisch, um einen Termin vor Ort abzustimmen.</p><a class="btn rand" href="/leistungen/">Leistungen ansehen</a>'
     vertrauen = f'<span>{ic("uhr")} Dauert ca. 2 Minuten</span><span>{ic("haken")} Unverbindlich</span><span>{ic("schild")} Daten sicher</span>'
     fun = funnel_rahmen('Angebot anfragen', 'anfrage', 'sie', schritte, danke, vertrauen)
-    st = [('1', 'var(--red)', 'Zentrale Duisburg', 'Hochstraße 184, 47228 Duisburg', MAIL), ('2', 'var(--green)', 'Ruhrgebiet-West · Essen', 'Bunsenstraße 30, 45145 Essen', 'ruhrgebietwest@tkl.gmbh'), ('3', 'var(--blue)', 'Ruhrgebiet-Ost · Castrop-Rauxel', 'Oststraße 25, 44575 Castrop-Rauxel', 'ruhrgebietost@tkl.gmbh')]
+    st = [('1', 'var(--red)', 'Zentrale Duisburg', 'Hochstraße 184, 47228 Duisburg', MAIL), ('2', 'var(--green)', 'Niederlassung Castrop-Rauxel', 'Oststraße 25, 44575 Castrop-Rauxel', 'ruhrgebietost@tkl.gmbh')]
     st_html = ''.join(f'<div class="standort"><span class="nr" style="background:{c}">{n}</span><div><b>{t}</b><span>{a}<br><a href="mailto:{m}">{m}</a></span></div></div>' for n, c, t, a, m in st)
     inhalt = f'''
 <section class="seitenkopf" id="anfrage"><div class="wrap">
@@ -516,21 +573,22 @@ def kontakt():
 <a class="standort" href="{TEL_LINK}" style="text-decoration:none;box-shadow:none;background:var(--paper)"><span class="nr" style="background:var(--ink)">{ic('tel')}</span><div><b>{TEL}</b><span>Zentrale – Mo. bis Fr.</span></div></a>
 <a class="standort" href="mailto:{MAIL}" style="text-decoration:none;box-shadow:none;background:var(--paper)"><span class="nr" style="background:var(--ink)">{ic('mail')}</span><div><b>{MAIL}</b><span>Wir antworten zeitnah</span></div></a>
 </div>
-<div class="hinweis" style="margin-top:16px">{ic('info')}<p><b>Nur im Ruhrgebiet:</b> Wir sind von Duisburg, Essen und Castrop-Rauxel aus tätig. Frühere Niederlassungen in Berlin und im Münsterland gibt es nicht mehr.</p></div>
+<div class="video-seite box" style="margin-top:16px;grid-template-columns:minmax(0,1fr) 140px;padding:18px"><p class="muted" style="margin:0"><b style="color:var(--ink)">Ralf Jung, Geschäftsführer:</b> „Wenn ihr im Ruhrgebiet einen Partner für Grünpflege und Winterdienst sucht – sprecht uns an.“</p>{stimme('ralf-angebot', ' mini')}</div>
+<div class="hinweis" style="margin-top:16px">{ic('info')}<p><b>Nur im Ruhrgebiet:</b> Wir sind von Duisburg und Castrop-Rauxel aus tätig. Frühere Niederlassungen in Berlin und im Münsterland gibt es nicht mehr.</p></div>
 </div>
 <div>{fun}</div>
 </div></div></section>
 
 <section class="sec bg-weiss" id="standorte"><div class="wrap gebiet">
-<div><span class="eyebrow">Standorte</span><h2>So finden Sie uns.</h2><p class="lead">Unsere Zentrale ist in Duisburg, die Niederlassungen in Essen und Castrop-Rauxel. Telefonisch erreichen Sie alle Standorte über die Zentrale.</p>
+<div><span class="eyebrow">Standorte</span><h2>So finden Sie uns.</h2><p class="lead">Unsere Zentrale ist in Duisburg, die Niederlassung in Castrop-Rauxel. Telefonisch erreichen Sie alle Standorte über die Zentrale.</p>
 <div class="standorte">{st_html}</div></div>
 <div class="karte rv">{karte()}</div>
 </div></section>
 {faq([('In welchen Städten sind Sie tätig?', 'Im gesamten Ruhrgebiet und den angrenzenden Städten – unter anderem in Duisburg, Essen, Oberhausen, Mülheim, Bottrop, Gelsenkirchen, Bochum, Herne, Castrop-Rauxel, Dortmund und Moers. Fragen Sie gern nach, wenn Ihr Ort nicht dabei ist.'),
-      ('Haben Sie noch Niederlassungen in Berlin oder im Münsterland?', 'Nein. Wir sind ausschließlich im Ruhrgebiet tätig – mit unserer Zentrale in Duisburg und den Niederlassungen in Essen und Castrop-Rauxel.'),
+      ('Haben Sie noch Niederlassungen in Berlin oder im Münsterland?', 'Nein. Wir sind ausschließlich im Ruhrgebiet tätig – mit unserer Zentrale in Duisburg und der Niederlassung in Castrop-Rauxel.'),
       ('Ist das Angebot kostenlos?', 'Ja. Besichtigung und Angebot sind für Sie unverbindlich und kostenfrei.'),
       ('Übernehmen Sie auch Privatgärten?', 'Nein. Wir arbeiten für Wohnungsunternehmen, Genossenschaften, Verwaltungen, Firmen und öffentliche Auftraggeber.')])}'''
-    schreibe('/kontakt/', seite('/kontakt/', 'Kontakt & Angebot anfragen | TKL GmbH Duisburg, Essen, Castrop-Rauxel', 'Angebot für Grünpflege, Winterdienst oder Spielplatzpflege anfragen: TKL GmbH, Hochstraße 184, 47228 Duisburg, Telefon 02065 90 36-0. Niederlassungen in Essen und Castrop-Rauxel.', inhalt, 'kontakt', funnel=True))
+    schreibe('/kontakt/', seite('/kontakt/', 'Kontakt & Angebot anfragen | TKL GmbH Duisburg & Castrop-Rauxel', 'Angebot für Grünpflege, Winterdienst oder Spielplatzpflege anfragen: TKL GmbH, Hochstraße 184, 47228 Duisburg, Telefon 02065 90 36-0. Niederlassung in Castrop-Rauxel.', inhalt, 'kontakt', funnel=True))
 
 
 # =====================================================================
@@ -547,7 +605,7 @@ def impressum():
 <h3>Registereintrag</h3><p>Eingetragen im Handelsregister<br>Registergericht: Amtsgericht Duisburg<br>Registernummer: HRB 24364</p>
 <h3>Umsatzsteuer-ID</h3><p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE120496681</p>
 <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3><p>Ralf Jung, Anschrift wie oben</p>
-<h3>Niederlassungen</h3><p>Ruhrgebiet-West: Bunsenstraße 30, 45145 Essen<br>Ruhrgebiet-Ost: Oststraße 25, 44575 Castrop-Rauxel</p>
+<h3>Niederlassung</h3><p>Oststraße 25, 44575 Castrop-Rauxel</p>
 <h3>Verbraucherstreitbeilegung</h3><p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
 <h3>Haftung für Inhalte und Links</h3><p>Die Inhalte dieser Website werden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität übernehmen wir jedoch keine Gewähr. Für Inhalte externer Websites, auf die wir verlinken, sind ausschließlich deren Betreiber verantwortlich.</p>
 <h3>Urheberrecht</h3><p>Texte, Fotos, Illustrationen und Grafiken dieser Website unterliegen dem deutschen Urheberrecht. Eine Verwendung außerhalb dieser Website bedarf der vorherigen schriftlichen Zustimmung der TKL GmbH.</p>
@@ -590,8 +648,9 @@ def intern():
     """Interne Abstimmungsseite für Janni/Steffi – nicht verlinkt, noindex."""
     b = '''<svg viewBox="0 0 100 100" role="img" aria-label="Logo-Entwurf B"><rect x="4" y="4" width="92" height="92" rx="26" fill="#15191C"/><rect x="24" y="30" width="11" height="42" rx="5.5" fill="#2DB35C"/><circle cx="64" cy="35" r="14" fill="#E8352D"/><path d="M46 72h34L63 44Z" fill="#4AA3EA" stroke="#4AA3EA" stroke-width="4" stroke-linejoin="round"/></svg>'''
     klaeren = [
-     ('Mitarbeiterzahl', 'Alte Website: „über 100“, im Gespräch: rund 50. Auf der neuen Seite steht deshalb keine Zahl. Genutzt werden: 3 Standorte, 8 Kolonnen, 25 Fahrzeuge, „einige seit über 20 Jahren dabei“ – bitte bestätigen.', 'Startseite, Über uns'),
-     ('Geschäftsführer auf dem Foto', 'Bildunterschrift lautet „Ralf Jung · Geschäftsführung“ (aus dem alten Impressum abgeleitet). Name und Funktion bitte bestätigen.', 'Über uns'),
+     ('Standort Essen', 'Ralf Jung nennt im Video zwei Niederlassungen: Duisburg (Westen) und Castrop-Rauxel (Osten). Die Essener Adresse (Bunsenstraße 30) habe ich deshalb herausgenommen. Gibt es den Standort noch?', 'Startseite, Kontakt, Footer'),
+     ('Zahlen aus dem Video', 'Jetzt verwendet: 50 Mitarbeiter, 10–12 Kolonnen (aus Ralfs Video), 25 Fahrzeuge (Janni), Kai über 30 Jahre dabei. Bitte kurz bestätigen.', 'Startseite, Über uns'),
+     ('Videos freigeben', 'Ralf, Grischa, Kai, Nail und das Duo sind mit O-Tönen und Untertiteln eingebunden. Bitte von TKL und den Mitarbeitern das OK holen (Recht am eigenen Bild).', 'Startseite, Karriere, Über uns'),
      ('Krinkels-Gruppe', '„Seit 2003 Teil der Krinkels-Gruppe“ stammt von der alten Seite. Noch aktuell und soll das genannt werden?', 'Über uns'),
      ('Impressum', 'Vertreter (Ruud Krinkels, Peter van Boesschouten), HRB 24364, USt-ID und Fax aus dem alten Impressum übernommen – aktuell?', 'Impressum'),
      ('Karriere-Vorteile', 'Bitte bestätigen: Arbeitskleidung gestellt, Arbeit das ganze Jahr (Winterdienst), Führerschein B reicht für den Start, BE für Kolonnenführer.', 'Karriere'),

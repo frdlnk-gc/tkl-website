@@ -2,9 +2,9 @@
 # Spiegelt site/ in die Vorschau und macht Ganzseiten-Shots: tools/qa.sh <name> <pfad> <breite> <hoehe>
 cd "$(dirname "$0")/.."
 SP=/private/tmp/claude-501/-Users-frederiklinke-Desktop-Alle-Ordner-Claude-Coding/f0417822-9295-460e-af8a-edb9857469fa/scratchpad/tkl-preview
-rsync -a --delete site/ $SP/site/
+rsync -a --delete site/ $SP/site/tkl-website/
 sep='?'; [[ "$2" == *\?* ]] && sep='&'
-tools/shoot.sh "$2${sep}statisch" $3 $4 _work/shots/$1.png
+tools/shoot.sh "/tkl-website$2${sep}statisch" $3 $4 _work/shots/$1.png
 python3 - "$1" <<'PY'
 import sys
 from PIL import Image

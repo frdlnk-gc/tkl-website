@@ -9,7 +9,7 @@ SITE = os.path.join(ROOT, 'site')
 BASE = '/tkl-website'  # Unterpfad auf frdlnk-gc.github.io; bei eigener Domain auf '' setzen
 BASIS_URL = 'https://frdlnk-gc.github.io' + BASE
 VORSCHAU = True  # solange die Seite auf der Vorschau-Domain liegt: noindex
-V = '20261005h'  # Cache-Version für CSS/JS
+V = '20261006a'  # Cache-Version für CSS/JS
 
 TEL, TEL_LINK = '02065 90 36-0', 'tel:+492065903600'
 MAIL = 'info@tkl.gmbh'
@@ -82,6 +82,22 @@ def kopf(aktiv):
 <div class="fuss-aktionen"><a class="btn" href="/kontakt/#anfrage">Anfrage stellen {ic('pfeil', 'pfeil')}</a><a class="btn rand" href="{TEL_LINK}">{ic('tel')} {TEL}</a></div>
 </nav>'''
 
+def rueckruf(aktiv):
+    du = aktiv == 'karriere'
+    if aktiv in ('intern',): return ''
+    txt = ('Fragen zum Job? Ruf uns an oder lass dich zurückrufen – ganz unkompliziert.' if du else 'Rufen Sie uns an – oder wir rufen Sie zurück. Ganz unkompliziert.')
+    return f'''<div class="rueckruf"><button class="rueckruf-knopf" type="button" aria-expanded="false" aria-controls="rueckruf-panel"><img src="/assets/img/avatar-ralf.webp" alt="" width="46" height="46"><span class="online"></span>{'Fragen? Wir rufen zurück' if not du else 'Fragen zum Job?'}</button>
+<div class="rueckruf-panel" id="rueckruf-panel" role="dialog" aria-label="Rückruf anfordern"><button class="rueckruf-zu" type="button" aria-label="Schließen">×</button>
+<div class="rueckruf-kopf"><img src="/assets/img/avatar-ralf.webp" alt="Ralf Jung" width="54" height="54"><span><b>Ralf Jung</b><span>Geschäftsführung · TKL GmbH</span></span></div>
+<p>{txt}</p><a class="btn klein dunkel" href="{TEL_LINK}" style="width:100%;margin-bottom:12px">{ic('tel')} {TEL}</a>
+<form data-typ="{'bewerbung' if du else 'anfrage'}" novalidate><div class="honig" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
+<div class="feld"><input name="name" placeholder="{'Dein' if du else 'Ihr'} Name" autocomplete="name" aria-label="Name"></div>
+<div class="feld"><input name="telefon" type="tel" placeholder="Telefonnummer" autocomplete="tel" aria-label="Telefonnummer"></div>
+<div class="feld"><input name="zeit" placeholder="Wann passt es? (optional)" aria-label="Wunschzeit"></div>
+<label class="check" style="margin-top:4px;font-size:.8rem"><input type="checkbox" name="datenschutz"><span>Einverstanden mit der <a href="/datenschutz/" target="_blank">Datenschutzerklärung</a></span></label>
+<p class="f-fehler" role="alert" style="margin:0;min-height:0"></p><button class="btn klein" type="submit" style="width:100%">Rückruf anfordern</button></form></div></div>
+'''
+
 def fuss(aktiv=''):
     leist = ''.join(f'<li><a href="/leistungen/{s}/">{t}</a></li>' for s, t, *_ in LEISTUNGEN)
     return f'''<footer class="fuss on-dark"><div class="wrap">
@@ -92,11 +108,11 @@ def fuss(aktiv=''):
 <div><h4>Unternehmen</h4><ul><li><a href="/ueber-uns/">Über uns</a></li><li><a href="/karriere/">Karriere &amp; Jobs</a></li><li><a href="/kontakt/">Kontakt &amp; Anfrage</a></li><li><a href="/kontakt/#standorte">Standorte</a></li></ul></div>
 <div><h4>Standorte</h4>
 <address><b>Zentrale Duisburg</b>Hochstraße 184, 47228 Duisburg</address>
-<address><b>Ruhrgebiet-West</b>Bunsenstraße 30, 45145 Essen</address>
-<address><b>Ruhrgebiet-Ost</b>Oststraße 25, 44575 Castrop-Rauxel</address></div>
+<address><b>Niederlassung Castrop-Rauxel</b>Oststraße 25, 44575 Castrop-Rauxel</address></div>
 </div>
 <div class="fuss-unten"><span>© <span data-jahr>2026</span> TKL GmbH · Duisburg</span><nav aria-label="Rechtliches"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><a href="/verwaltung/" rel="nofollow">Kunden-Login</a></nav></div>
 </div></footer>
+{rueckruf(aktiv)}
 <div class="mobil-cta" aria-label="Schnellkontakt"><a href="{TEL_LINK}">{ic('tel')} Anrufen</a><a class="primaer" href="{'#bewerben' if aktiv == 'karriere' else '/kontakt/#anfrage'}">{'Jetzt bewerben' if aktiv == 'karriere' else 'Anfrage stellen'}</a></div>'''
 
 def seite(pfad, titel, beschreibung, inhalt, aktiv='', funnel=False, extra_head='', body_attr=''):
@@ -108,8 +124,7 @@ def seite(pfad, titel, beschreibung, inhalt, aktiv='', funnel=False, extra_head=
       "address": {"@type": "PostalAddress", "streetAddress": "Hochstraße 184", "postalCode": "47228", "addressLocality": "Duisburg", "addressCountry": "DE"},
       "areaServed": ["Duisburg", "Essen", "Oberhausen", "Mülheim an der Ruhr", "Bottrop", "Gelsenkirchen", "Bochum", "Herne", "Castrop-Rauxel", "Dortmund", "Ruhrgebiet"],
       "department": [
-        {"@type": "LocalBusiness", "name": "TKL GmbH – Niederlassung Ruhrgebiet-West", "address": {"@type": "PostalAddress", "streetAddress": "Bunsenstraße 30", "postalCode": "45145", "addressLocality": "Essen", "addressCountry": "DE"}},
-        {"@type": "LocalBusiness", "name": "TKL GmbH – Niederlassung Ruhrgebiet-Ost", "address": {"@type": "PostalAddress", "streetAddress": "Oststraße 25", "postalCode": "44575", "addressLocality": "Castrop-Rauxel", "addressCountry": "DE"}}]}
+        {"@type": "LocalBusiness", "name": "TKL GmbH – Niederlassung Castrop-Rauxel", "address": {"@type": "PostalAddress", "streetAddress": "Oststraße 25", "postalCode": "44575", "addressLocality": "Castrop-Rauxel", "addressCountry": "DE"}}]}
     return f'''<!doctype html>
 <html lang="de">
 <head>

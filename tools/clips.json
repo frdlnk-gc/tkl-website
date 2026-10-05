@@ -1,0 +1,132 @@
+{
+ "stimme-20-jahre": {
+  "quelle": "1jahr-vs-20jahre_C4527",
+  "segmente": [
+   [
+    0.2,
+    34.0
+   ]
+  ],
+  "poster": 8.0
+ },
+ "stimme-duo": {
+  "quelle": "seit20jahren_C4525",
+  "segmente": [
+   [
+    0.2,
+    12.4
+   ],
+   [
+    27.2,
+    56.4
+   ]
+  ],
+  "poster": 2.0
+ },
+ "gruenpflege-20000": {
+  "quelle": "gruenpflege-vorstellen1_C4524",
+  "segmente": [
+   [
+    4.3,
+    31.0
+   ]
+  ],
+  "poster": 3.0
+ },
+ "grischa-km": {
+  "quelle": "gruenpflege-vorstellen1_C4524",
+  "segmente": [
+   [
+    67.6,
+    87.6
+   ]
+  ],
+  "poster": 4.0
+ },
+ "stimme-grischa": {
+  "quelle": "vorstellung-grischa_C4522",
+  "segmente": [
+   [
+    6.1,
+    23.2
+   ],
+   [
+    105.1,
+    128.9
+   ],
+   [
+    137.4,
+    157.1
+   ]
+  ],
+  "poster": 9.0
+ },
+ "stimme-kai": {
+  "quelle": "vorstellung-kai_C4521",
+  "segmente": [
+   [
+    5.8,
+    14.8
+   ],
+   [
+    24.1,
+    46.2
+   ],
+   [
+    55.8,
+    64.7
+   ],
+   [
+    91.7,
+    95.4
+   ]
+  ],
+  "poster": 4.0
+ },
+ "stimme-nail": {
+  "quelle": "vorstellung-nail_C4528",
+  "segmente": [
+   [
+    0.2,
+    23.2
+   ],
+   [
+    44.2,
+    58.6
+   ],
+   [
+    85.2,
+    110.2
+   ]
+  ],
+  "poster": 5.0
+ },
+ "ralf-vorstellung": {
+  "quelle": "ralf-jung_C4556",
+  "segmente": [
+   [
+    2.0,
+    44.0
+   ],
+   [
+    71.0,
+    100.0
+   ],
+   [
+    119.0,
+    133.0
+   ]
+  ],
+  "poster": 3.0
+ },
+ "ralf-angebot": {
+  "quelle": "ralf-jung_C4557",
+  "segmente": [
+   [
+    0.0,
+    12.3
+   ]
+  ],
+  "poster": 2.0
+ }
+}

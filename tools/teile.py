@@ -66,13 +66,13 @@ def hecke():
 
 # ---------- Karte Einsatzgebiet ----------
 ORTE = [  # name, lat, lon, gross, dx, dy
- ('Duisburg', 51.4344, 6.7623, True, 14, -12), ('Essen', 51.4556, 7.0116, True, 14, -12), ('Castrop-Rauxel', 51.5550, 7.3110, True, -60, -22),
+ ('Duisburg', 51.4344, 6.7623, True, 14, -12), ('Essen', 51.4556, 7.0116, False, 10, -10), ('Castrop-Rauxel', 51.5550, 7.3110, True, -60, -22),
  ('Oberhausen', 51.4963, 6.8638, False, 10, -10), ('Mülheim', 51.4180, 6.8845, False, 10, 18), ('Bottrop', 51.5235, 6.9286, False, 10, -10),
  ('Gelsenkirchen', 51.5177, 7.0857, False, 10, -10), ('Bochum', 51.4818, 7.2162, False, 10, 18), ('Herne', 51.5380, 7.2257, False, -46, -8),
  ('Dortmund', 51.5136, 7.4653, False, -30, 22), ('Moers', 51.4516, 6.6408, False, 10, -10), ('Recklinghausen', 51.6141, 7.1979, False, -50, -12),
  ('Remscheid', 51.1787, 7.1897, False, 10, 4), ('Velbert', 51.3400, 7.0435, False, 10, 4), ('Witten', 51.4370, 7.3350, False, 10, 18),
 ]
-STANDORTE = {'Duisburg': ('1', '#D8231C'), 'Essen': ('2', '#1E9E4A'), 'Castrop-Rauxel': ('3', '#2E8BD8')}
+STANDORTE = {'Duisburg': ('1', '#D8231C'), 'Castrop-Rauxel': ('2', '#1E9E4A')}
 def proj(lat, lon):
     return (lon - 6.55) / 1.0 * 1000, (51.66 - lat) / 0.52 * 830
 
@@ -90,7 +90,7 @@ def karte():
             d += f'C{c1[0]:.0f} {c1[1]:.0f} {c2[0]:.0f} {c2[1]:.0f} {p2[0]:.0f} {p2[1]:.0f} '
         return d + 'Z'
     gebiet = glatt(pts)
-    out = [f'<svg viewBox="0 0 1000 830" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Karte des Einsatzgebiets im Ruhrgebiet mit den Standorten Duisburg, Essen und Castrop-Rauxel">',
+    out = [f'<svg viewBox="0 0 1000 830" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Karte des Einsatzgebiets im Ruhrgebiet mit den Standorten Duisburg und Castrop-Rauxel">',
            '<defs><pattern id="raster" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#c9dcef" stroke-width="1"/></pattern></defs>',
            '<rect width="1000" height="830" fill="url(#raster)"/>',
            f'<path d="{gebiet}" fill="#d6ecd9" stroke="#9fd0ac" stroke-width="2" stroke-dasharray="6 6" opacity=".95"/>',
