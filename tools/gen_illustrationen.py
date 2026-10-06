@@ -13,10 +13,16 @@ STYLE_ALT = ("Hand-painted editorial illustration in gouache and acrylic with vi
  "Workers wear black long-sleeve work shirts and bright red work trousers, ear protection where it fits, friendly faces seen from a distance. "
  "Setting: typical Ruhr area residential estate of a housing cooperative: three-storey white plastered apartment blocks with balconies, mature trees, lawns, grey paved paths. "
  "Absolutely no text, no letters, no numbers, no logos, no brand names, no signs. Calm negative space in the upper third. Scene: ")
+STYLE2 = None
 STYLE = ("Loose hand-drawn editorial sketch: confident thin black ink outlines with soft transparent watercolor washes on warm off-white paper, "
  "lots of white paper showing, slightly naive and friendly like an architect's concept sketch, muted pastel palette (sage green, pale sky blue, warm sand, soft brick). "
- "NO people, NO vehicles, NO machines, NO animals in the image. The lower middle of the image is an open, calm empty area of ground where a cut-out photo will be placed later. "
+ "{personen}The lower middle of the image is an open, calm empty area of ground where a cut-out photo will be placed later. "
  "Absolutely no text, letters, numbers or signs. Scene: ")
+SCENES_COLLAGE2 = {
+ "bg-baum2": "A large old deciduous tree next to a simple white apartment block. A red aerial work platform (cherry picker) stands beside the tree, in its basket a small sketched worker in red trousers and helmet prunes a branch with a pole saw; below, red-white traffic cones and a small pile of cut branches. The right third of the foreground is an open empty lawn.",
+ "bg-neubau2": "A renovated apartment block with balconies; in front an outdoor area under construction: a half-laid grey concrete paver path, a pallet stack of paving stones, a small orange mini excavator, rolls of fresh turf, sand heap, young trees with wooden stakes. Two small sketched workers in red trousers kneel laying pavers in the middle distance on the left. The right third of the foreground is open empty ground.",
+ "bg-gruen": "The wide green lawn of an apartment estate with three-storey white apartment blocks, mature trees and neat hedges, freshly mown stripes in the grass, a paved footpath at the edge. The middle foreground is open empty lawn.",
+}
 SCENES_COLLAGE = {
  "bg-winter": "A curved footpath between two simple three-storey apartment blocks in winter, snow on roofs and lawns, bare trees, a few street lamps, the path itself freshly cleared.",
  "bg-spielplatz": "The green courtyard of an apartment estate with a small wooden playground: climbing tower with slide on the left side, sandbox, two swings, a bench, trees. Open lawn in the middle foreground.",
@@ -32,14 +38,16 @@ SCENES = {
 def gen(name):
     out = os.path.join(ROOT, "_work", "illu", name + ".png")
     if os.path.exists(out): return name + " existiert"
-    body = json.dumps({"model": MODEL, "prompt": STYLE + SCENES[name], "size": "1536x1024", "quality": "high", "n": 1}).encode()
+    body = json.dumps({"model": MODEL, "prompt": STYLE.replace("{personen}", "Only the small sketched people and machines explicitly described, drawn in the same loose ink-and-watercolor style, no other people. " if name in SCENES_COLLAGE2 else "NO people, NO vehicles, NO machines, NO animals in the image. ") + SCENES[name], "size": "1536x1024", "quality": "high", "n": 1}).encode()
     req = urllib.request.Request("https://api.openai.com/v1/images/generations", data=body, headers={"Authorization": "Bearer " + KEY, "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=400) as r: d = json.load(r)
     Image.open(io.BytesIO(base64.b64decode(d["data"][0]["b64_json"]))).save(out)
     return name + " ok"
 if __name__ == "__main__":
     os.makedirs(os.path.join(ROOT, "_work", "illu"), exist_ok=True)
-    if sys.argv[1:2] == ["collage"]:
+    if sys.argv[1:2] == ["collage2"]:
+        SCENES.update(SCENES_COLLAGE2); names = list(SCENES_COLLAGE2)
+    elif sys.argv[1:2] == ["collage"]:
         SCENES.update(SCENES_COLLAGE); names = list(SCENES_COLLAGE)
     else:
         names = sys.argv[1:] or list(SCENES)

@@ -17,8 +17,9 @@ def rand(im, px=14):
 COLLAGEN = {
  'collage-winter': ('bg-winter', [('raw_fm86', .70, .50, .97)]),
  'collage-spielplatz': ('bg-spielplatz', [('raw_03135', .66, .60, .98)]),
- 'collage-baum': ('bg-baum', [('raw_03246', .62, .44, .96)]),
- 'collage-neubau': ('bg-neubau', [('raw_03218', .66, .62, .98)]),
+ 'collage-baum': ('bg-baum2', [('raw_03156', .82, .77, 1.06)]),
+ 'collage-neubau': ('bg-neubau2', [('raw_03110', .80, .80, 1.06)]),
+ 'collage-gruen': ('bg-gruen', [('raw_03178', .60, .56, .96)]),
 }
 for name, (bg, teile) in COLLAGEN.items():
     hg = Image.open(os.path.join(W, 'illu', bg + '.png')).convert('RGBA'); Wd, H = hg.size

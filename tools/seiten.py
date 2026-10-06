@@ -36,7 +36,7 @@ def startseite():
         farbe = {'gruen': 'var(--green)', 'blau': 'var(--blue)', 'rot': 'var(--red)', 'sand': '#c9922a'}[f]
         karten.append(f'''<a class="lk{' gross' if n < 2 else ''} rv d{n % 3 + 1}" href="/leistungen/{s}/" style="--c:{farbe}">
 <span class="tag">{['Kernleistung', 'November bis März', 'Sicherheit zuerst', 'Teil der Grünpflege', 'Für Bestandskunden'][n]}</span>
-<div class="lk-bild{' illu' if illu else ''}">{bild(b, '' if illu else 'Mitarbeiter der TKL mäht mit dem Aufsitzmäher eine Rasenfläche vor einem Wohnblock', '(max-width: 640px) 100vw, (max-width: 980px) 50vw, 40vw')}</div>
+<div class="lk-bild{' illu' if illu else ''}">{bild(b, '' if illu else 'TKL-Mitarbeiter auf dem Aufsitzmäher vor einer gemalten Wohnanlage', '(max-width: 640px) 100vw, (max-width: 980px) 50vw, 40vw')}</div>
 <div class="lk-text"><h3>{t}</h3><p>{k}</p><span class="mehr">Mehr erfahren <i>{ic('pfeil')}</i></span></div></a>''')
     inhalt = f'''
 <section class="hero" aria-labelledby="hero-titel">
@@ -259,7 +259,7 @@ DETAILS = {
    eyebrow='Kernleistung', seo_titel='Grünpflege im Ruhrgebiet für Wohnanlagen & Gewerbe | TKL GmbH',
    seo='Grünpflege in Duisburg, Essen und dem Ruhrgebiet: Rasenpflege, Hecken- und Gehölzschnitt, Laub und Wegepflege für Wohnungsgenossenschaften, Immobilienunternehmen und Firmen – mit fester Kolonne.',
    lead='Rasen mähen, Hecken schneiden, Laub entfernen, Wege sauber halten: Wir kümmern uns um das ganze „Drumherum“ Ihrer Immobilien – regelmäßig, nach festem Plan und mit einer Kolonne, die Ihre Anlage kennt.',
-   bild='maeher-block', alt='TKL-Mitarbeiter auf dem Aufsitzmäher vor einem Wohnblock, zwischen zwei Bäumen',
+   bild='collage-gruen', alt='TKL-Mitarbeiter auf dem Aufsitzmäher vor einer gemalten Wohnanlage',
    leistungen=['Rasenpflege mit Aufsitzmähern und Freischneidern', 'Hecken-, Strauch- und Gehölzschnitt', 'Pflege von Beeten und Pflanzflächen', 'Laubbeseitigung im Herbst', 'Wege, Plätze und Zufahrten sauber halten', 'Kontrolle auf Gefahrenstellen bei jedem Einsatz', 'Schnittgut-Entsorgung inklusive', 'Pflege nach Ihrem Leistungsverzeichnis'],
    kacheln=[('team', 'Feste Kolonne', 'Dieselben Leute kommen jede Woche – eingespielt, schnell, ohne lange Einweisung.'), ('kalender', 'Feste Intervalle', 'Pflegegänge nach Plan über die ganze Saison – Sie müssen nichts hinterhertelefonieren.'), ('traktor', 'Profi-Technik', 'Große Aufsitzmäher schaffen weite Rasenflächen in einem Bruchteil der Zeit.'), ('besen', 'Sauber hinterlassen', 'Nach dem Mähen wird geblasen und gekehrt – Wege und Eingänge bleiben sauber.')],
    galerie=[('trimmer-baum', 'TKL-Mitarbeiter mäht mit dem Freischneider um einen Baum herum', True), ('trimmer-weg', 'Mitarbeiter mit Freischneider an einem Gehweg', False), ('staub-trimmer', 'Freischneider-Einsatz an einer Böschung', False), ('maeher-front', 'Aufsitzmäher von vorn', False), ('blasgeraet', 'Laubbläser auf einem gepflasterten Weg', False)],

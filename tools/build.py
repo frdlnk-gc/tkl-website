@@ -9,14 +9,14 @@ SITE = os.path.join(ROOT, 'site')
 BASE = '/tkl-website'  # Unterpfad auf frdlnk-gc.github.io; bei eigener Domain auf '' setzen
 BASIS_URL = 'https://frdlnk-gc.github.io' + BASE
 VORSCHAU = True  # solange die Seite auf der Vorschau-Domain liegt: noindex
-V = '20261006b'  # Cache-Version für CSS/JS
+V = '20261006c'  # Cache-Version für CSS/JS
 
 TEL, TEL_LINK = '02065 90 36-0', 'tel:+492065903600'
 MAIL = 'info@tkl.gmbh'
 
 LEISTUNGEN = [
  # slug, titel, kurz, icon, farbe, bild, illu?
- ('gruenpflege', 'Grünpflege', 'Rasen, Hecken, Gehölze und Wege – regelmäßig, nach festem Plan und immer mit derselben Kolonne.', 'blatt', 'gruen', 'maeher-block', False),
+ ('gruenpflege', 'Grünpflege', 'Rasen, Hecken, Gehölze und Wege – regelmäßig, nach festem Plan und immer mit derselben Kolonne.', 'blatt', 'gruen', 'collage-gruen', True),
  ('winterdienst', 'Winterdienst', 'Räumen und Streuen, bevor Ihre Mieter und Mitarbeiter aus dem Haus gehen – zuverlässig den ganzen Winter.', 'schnee', 'blau', 'collage-winter', True),
  ('spielplaetze', 'Spielplätze', 'Regelmäßige Kontrolle, Pflege und Reparatur – damit Ihre Spielplätze sicher bleiben.', 'spiel', 'rot', 'collage-spielplatz', True),
  ('baumpflege', 'Baumpflege', 'Gesunde, verkehrssichere Bäume auf Ihren Grünflächen – als Teil der laufenden Pflege.', 'baum', 'gruen', 'collage-baum', True),
