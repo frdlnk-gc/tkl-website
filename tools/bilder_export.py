@@ -26,8 +26,9 @@ FOTOS = {
  "maeher-himmel": ("IMG_3955.jpg", None),
  "trimmer-pfosten": ("DSC03229.JPG", None),
  "rasen-baum": ("DSC03141.JPG", None),
+ "trimmer-hecke": ("DSC03246.JPG", None),
 }
-STICKER = {"duo": "03135", "laecheln": "03158", "blasen": "03219", "trimmer": "03205", "maeher": "03083", "trimmer2": "03234"}
+STICKER = {"duo": "03135", "laecheln": "03158", "blasen": "03218", "trimmer": "03205", "maeher": "03083", "trimmer2": "03234"}
 
 def foto(name, fn, crop):
     im = Image.open(os.path.join(SRC, fn)); im = ImageOps.exif_transpose(im).convert("RGB")

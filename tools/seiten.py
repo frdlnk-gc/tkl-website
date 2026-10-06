@@ -146,7 +146,7 @@ def startseite():
 <div class="text"><h3>Ein gepflegter erster Eindruck</h3><p>Das Firmengelände ist Ihre Visitenkarte – für Kunden, Bewerber und Mitarbeiter. Wir halten Grünflächen, Hecken und Wege rund um Bürogebäude, Hallen und Parkplätze in Schuss und sorgen im Winter für sichere Zufahrten.</p>
 <ul class="haken"><li>Pflege auch außerhalb Ihrer Betriebszeiten möglich</li><li>Sichere Zufahrten, Parkplätze und Eingänge im Winter</li><li>Alles sauber hinterlassen – kein Schnittgut auf den Wegen</li></ul>
 <a class="textlink" href="/kontakt/#anfrage">Angebot für Ihr Gelände {ic('pfeil')}</a></div>
-<div class="bild">{bild('blasgeraet', 'TKL-Mitarbeiter reinigt mit dem Laubbläser einen gepflasterten Weg', '(max-width: 980px) 100vw, 50vw')}</div></div>
+<div class="bild">{bild('trimmer-hecke', 'TKL-Mitarbeiter mit Freischneider an Hecke und Weg vor einem Gebäude mit Parkplatz', '(max-width: 980px) 100vw, 50vw')}</div></div>
 </div>
 </section>
 
@@ -272,7 +272,7 @@ DETAILS = {
    eyebrow='Räum- und Streudienst', seo_titel='Winterdienst Duisburg, Essen & Ruhrgebiet | TKL GmbH',
    seo='Winterdienst für Wohnanlagen und Firmengelände im Ruhrgebiet: Räumen und Streuen von Gehwegen, Zufahrten und Parkplätzen – früh am Morgen, mit Kehrmaschinen und Streutechnik.',
    lead='Schnee und Glätte warten nicht auf Bürozeiten. Wir räumen und streuen Gehwege, Hauszugänge, Zufahrten und Parkplätze, bevor Ihre Mieter und Mitarbeiter unterwegs sind – den ganzen Winter, nach Wetterlage.',
-   bild='illu-winterdienst', alt='', illu=True,
+   bild='collage-winter', alt='', illu=True,
    leistungen=['Räumen von Schnee auf Gehwegen und Zugängen', 'Streuen bei Glätte und Eis', 'Zufahrten, Parkplätze und Höfe', 'Einsätze früh morgens und nach Wetterlage', 'Kehrmaschinen und Streufahrzeuge', 'Wohnanlagen ebenso wie Firmen- und Industriegelände'],
    kacheln=[('uhr', 'Früh vor Ort', 'Wir sind unterwegs, bevor der Berufsverkehr beginnt – damit niemand auf dem Weg zur Arbeit ausrutscht.'), ('besen', 'Eigene Technik', 'Kehrmaschinen und Streugeräte aus dem eigenen Fuhrpark – kein Warten auf Subunternehmer.'), ('team', 'Mehr Leute im Winter', 'Für die Wintersaison verstärken wir unsere Teams gezielt, damit jede Tour sicher abgedeckt ist.'), ('pin', 'Kurze Wege', 'Drei Standorte im Revier – unsere Fahrzeuge stehen nah an Ihren Objekten.')],
    bildzeile=('kehrmaschine', 'Grüne Kehrmaschine von TKL mit Kehrbesen in der Maschinenhalle'),
@@ -284,7 +284,7 @@ DETAILS = {
    eyebrow='Kontrolle · Pflege · Reparatur', seo_titel='Spielplatzkontrolle & Spielplatzpflege im Ruhrgebiet | TKL GmbH',
    seo='Spielplatzkontrolle, Spielplatzpflege und Reparaturen für Wohnungsunternehmen und Genossenschaften in Duisburg, Essen und dem Ruhrgebiet. Sichere Spielgeräte, sauberer Sand, gepflegte Flächen.',
    lead='Spielplätze müssen nicht nur schön aussehen, sondern vor allem sicher sein. Unsere geschulten Mitarbeiter kontrollieren Spielgeräte regelmäßig, pflegen die Flächen und kümmern sich um Reparaturen – damit Kinder unbeschwert spielen können.',
-   bild='illu-spielplaetze', alt='', illu=True,
+   bild='collage-spielplatz', alt='', illu=True,
    leistungen=['Regelmäßige Sichtkontrollen der Spielgeräte', 'Prüfung auf Verschleiß und Unfallgefahren', 'Sand reinigen, auflockern oder austauschen', 'Pflege von Fallschutz und Umgebung', 'Reparatur und Austausch einzelner Bauteile', 'Neubau von Spielplätzen auf Anfrage'],
    kacheln=[('schild', 'Sicherheit zuerst', 'Abnutzung und Gefahrenstellen erkennen wir früh – bevor etwas passiert.'), ('liste', 'Nachvollziehbar', 'Sie erfahren, was wir geprüft und erledigt haben, und bekommen Bescheid, wenn etwas zu tun ist.'), ('werkzeug', 'Direkt repariert', 'Kleinere Schäden beheben wir meist gleich mit – größere stimmen wir mit Ihnen ab.'), ('blatt', 'Alles in einem Gang', 'Spielplatzkontrolle und Grünpflege lassen sich wunderbar kombinieren.')],
    faq=[('Wie oft sollte ein Spielplatz kontrolliert werden?', 'Spielplätze werden in festen Intervallen kontrolliert – von der regelmäßigen Sichtkontrolle bis zur jährlichen Hauptuntersuchung. Wie oft genau, hängt von Nutzung und Geräten ab. Wir beraten Sie gern dazu.'),
@@ -295,7 +295,7 @@ DETAILS = {
    eyebrow='Im Rahmen der Grünpflege', seo_titel='Baumpflege für Wohnanlagen & Gewerbe im Ruhrgebiet | TKL GmbH',
    seo='Baumpflege auf Wohnanlagen und Firmengeländen im Ruhrgebiet: Kronenpflege, Totholz entfernen, Lichtraumprofil und Verkehrssicherheit – als Teil der laufenden Grünpflege.',
    lead='Bäume machen Wohnanlagen lebenswert – solange sie gesund und sicher sind. Wir pflegen den Baumbestand auf den Flächen, die wir betreuen: mit Blick für das Ganze und für die Sicherheit Ihrer Mieter, Kunden und Besucher.',
-   bild='illu-baumpflege', alt='', illu=True,
+   bild='collage-baum', alt='', illu=True,
    leistungen=['Kronenpflege und Rückschnitt', 'Totholz entfernen', 'Lichtraumprofil über Wegen und Zufahrten', 'Kontrolle der Verkehrssicherheit', 'Arbeiten mit Hubarbeitsbühne', 'Abtransport und Entsorgung des Schnittguts'],
    kacheln=[('schild', 'Verkehrssicherheit', 'Wir sehen bei jedem Pflegegang hin und melden uns, wenn ein Baum Aufmerksamkeit braucht.'), ('baum', 'Fachgerechter Schnitt', 'Geschulte Mitarbeiter schneiden so, dass der Baum gesund bleibt.'), ('team', 'Starke Partner', 'Für besondere Fälle wie Seilklettertechnik arbeiten wir mit erfahrenen Fachpartnern zusammen.'), ('liste', 'Teil der Pflege', 'Baumpflege läuft bei uns zusammen mit der Grünpflege – ein Ansprechpartner, ein Termin.')],
    hinweis='Baumpflege bieten wir für Flächen an, die wir ohnehin pflegen. Für reine Einzelbaum-Aufträge ohne laufende Pflege sind wir nicht der richtige Partner.',
@@ -306,7 +306,7 @@ DETAILS = {
    eyebrow='Für unsere Bestandskunden', seo_titel='Neubau & Sanierung von Außenanlagen im Ruhrgebiet | TKL GmbH',
    seo='Neue Außenanlagen nach Sanierung oder Neubau: Rasen anlegen, Pflanzungen, Wege und Pflasterarbeiten für Wohnungsunternehmen und Firmen im Ruhrgebiet – aus einer Hand.',
    lead='Nach der Fassadensanierung oder beim Neubau sollen auch die Außenanlagen wieder stimmen. Für Kunden, deren Flächen wir pflegen, legen wir Rasen neu an, pflanzen Bäume und Sträucher und bauen Wege und Pflasterflächen.',
-   bild='illu-neubau', alt='', illu=True,
+   bild='collage-neubau', alt='', illu=True,
    leistungen=['Rasenflächen neu anlegen (Saat oder Rollrasen)', 'Bäume, Hecken und Sträucher pflanzen', 'Wege, Zufahrten und Pflasterflächen', 'Wiederherstellung nach Sanierungen', 'Reparaturen an bestehenden Anlagen', 'Übergang direkt in die laufende Pflege'],
    kacheln=[('pflaster', 'Pflaster vom Fach', 'Mit der Eintragung in die Straßenbauer-Handwerksrolle bauen wir Pflasterflächen fachgerecht.'), ('haus', 'Nach der Sanierung', 'Wenn die Fassade fertig ist, bringen wir das Grün drumherum wieder in Form.'), ('blatt', 'Bau und Pflege', 'Was wir bauen, pflegen wir anschließend – aus einer Hand, ohne Übergabeprobleme.'), ('kalender', 'Planbar', 'Wir stimmen uns mit Ihrer Bauleitung ab und halten den Zeitplan.')],
    hinweis='Neubau und Sanierung übernehmen wir vor allem für Kunden, deren Anlagen wir bereits pflegen. Sprechen Sie uns gern an – wir sagen Ihnen ehrlich, ob Ihr Projekt zu uns passt.',

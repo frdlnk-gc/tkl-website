@@ -141,12 +141,17 @@
     var f = rr.querySelector('form'), t0 = Date.now();
     f.addEventListener('submit', function (e) {
       e.preventDefault(); var msg = f.querySelector('.f-fehler'); msg.textContent = '';
-      if (!f.name.value.trim() || f.telefon.value.replace(/\D/g, '').length < 6) { msg.textContent = 'Bitte Name und Telefonnummer angeben.'; return; }
-      var b = f.querySelector('button'); b.disabled = true;
-      fetch(API + '/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ typ: f.dataset.typ, name: f.name.value, telefon: f.telefon.value, datenschutz: f.datenschutz.checked, dauer: Date.now() - t0, website: f.website.value, quelle: location.pathname.replace(/^\/tkl-website(?=\/)/, ''), nachricht: 'Rückruf gewünscht' + (f.zeit.value ? ' – ' + f.zeit.value : ''), daten: { rueckruf: 'Ja', zeit: f.zeit.value || 'egal' } }) })
+      var du = f.dataset.anrede === 'du';
+      if (!f.name.value.trim()) { msg.textContent = du ? 'Bitte gib deinen Namen an.' : 'Bitte geben Sie Ihren Namen an.'; return; }
+      if (f.telefon.value.replace(/\D/g, '').length < 6) { msg.textContent = du ? 'Bitte gib eine Telefonnummer an, damit wir zurückrufen können.' : 'Bitte geben Sie eine Telefonnummer an, damit wir zurückrufen können.'; return; }
+      if (f.email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) { msg.textContent = 'Bitte E-Mail-Adresse prüfen.'; return; }
+      if (!f.datenschutz.checked) { msg.textContent = du ? 'Bitte stimm der Datenschutzerklärung zu.' : 'Bitte der Datenschutzerklärung zustimmen.'; return; }
+      var b = f.querySelector('button'); b.disabled = true; b.textContent = 'Wird gesendet …';
+      var text = f.nachricht.value.trim();
+      fetch(API + '/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ typ: f.dataset.typ, name: f.name.value, firma: f.firma ? f.firma.value : '', telefon: f.telefon.value, email: f.email.value, datenschutz: true, dauer: Date.now() - t0, website: f.website.value, quelle: location.pathname.replace(/^\/tkl-website(?=\/)/, ''), nachricht: 'Rückruf gewünscht' + (text ? ': ' + text : ''), daten: { rueckruf: 'Ja' } }) })
         .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.fehler); }); })
-        .then(function () { f.outerHTML = '<p style="margin:0"><b>Danke!</b> Wir rufen Sie so schnell wie möglich zurück.</p>'; })
-        .catch(function (err) { msg.textContent = err.message || 'Hat nicht geklappt – bitte rufen Sie uns an.'; b.disabled = false; });
+        .then(function () { f.outerHTML = '<div class="rueckruf-danke"><b>Danke' + (du ? '!' : ' für Ihre Anfrage!') + '</b><br>' + (du ? 'Wir rufen dich innerhalb von 24 bis 48 Stunden zurück.' : 'Wir rufen Sie innerhalb von 24 bis 48 Stunden zurück.') + '</div>'; })
+        .catch(function (err) { msg.textContent = err.message || 'Hat nicht geklappt – bitte rufen Sie uns an.'; b.disabled = false; b.textContent = 'Rückruf anfordern'; });
     });
   }
 

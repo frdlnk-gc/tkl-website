@@ -7,12 +7,22 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 KEY = os.environ.get("OPENAI_API_KEY") or json.load(open(os.path.join(ROOT, "..", "greencareers-kundenfunnel", "config.json")))["openai_api_key"]
 MODEL = os.environ.get("GC_IMAGE_MODEL", "gpt-image-2.5-sunburst")
-STYLE = ("Hand-painted editorial illustration in gouache and acrylic with visible brush strokes and subtle paper grain. "
+STYLE_ALT = ("Hand-painted editorial illustration in gouache and acrylic with visible brush strokes and subtle paper grain. "
  "Soft pastel palette (pale sky blue, mint green, warm cream, soft coral) with confident accents of signal red (#D8231C) and fresh leaf green. "
  "Modern, calm and professional, like a high-end picture book for adults, slightly naive shapes, no outlines overload. "
  "Workers wear black long-sleeve work shirts and bright red work trousers, ear protection where it fits, friendly faces seen from a distance. "
  "Setting: typical Ruhr area residential estate of a housing cooperative: three-storey white plastered apartment blocks with balconies, mature trees, lawns, grey paved paths. "
  "Absolutely no text, no letters, no numbers, no logos, no brand names, no signs. Calm negative space in the upper third. Scene: ")
+STYLE = ("Loose hand-drawn editorial sketch: confident thin black ink outlines with soft transparent watercolor washes on warm off-white paper, "
+ "lots of white paper showing, slightly naive and friendly like an architect's concept sketch, muted pastel palette (sage green, pale sky blue, warm sand, soft brick). "
+ "NO people, NO vehicles, NO machines, NO animals in the image. The lower middle of the image is an open, calm empty area of ground where a cut-out photo will be placed later. "
+ "Absolutely no text, letters, numbers or signs. Scene: ")
+SCENES_COLLAGE = {
+ "bg-winter": "A curved footpath between two simple three-storey apartment blocks in winter, snow on roofs and lawns, bare trees, a few street lamps, the path itself freshly cleared.",
+ "bg-spielplatz": "The green courtyard of an apartment estate with a small wooden playground: climbing tower with slide on the left side, sandbox, two swings, a bench, trees. Open lawn in the middle foreground.",
+ "bg-baum": "One large old deciduous tree with a wide crown standing on a lawn in front of a simple white apartment block, a paved path curving past, autumn colours in the leaves.",
+ "bg-neubau": "A freshly renovated modern apartment block with balconies, in front newly laid lawn, young trees with wooden stakes, a new paved path and a parking bay in the foreground.",
+}
 SCENES = {
  "winterdienst": "Early winter morning at blue hour, light fresh snow. A compact red municipal utility tractor with a front rotating brush clears a paved footpath between apartment blocks, a worker in red trousers and a black winter jacket spreads grit with a small push spreader. Warm glowing street lamps, a few lit windows, quiet and safe atmosphere.",
  "spielplaetze": "A tidy playground in the green courtyard of an apartment estate on a sunny late-summer morning: wooden climbing tower with a stainless slide, swings, sandbox. One worker in red trousers kneels and checks a swing chain with a clipboard, a second worker rakes the sand. No children present. Fresh, safe, well maintained.",
@@ -29,7 +39,10 @@ def gen(name):
     return name + " ok"
 if __name__ == "__main__":
     os.makedirs(os.path.join(ROOT, "_work", "illu"), exist_ok=True)
-    names = sys.argv[1:] or list(SCENES)
+    if sys.argv[1:2] == ["collage"]:
+        SCENES.update(SCENES_COLLAGE); names = list(SCENES_COLLAGE)
+    else:
+        names = sys.argv[1:] or list(SCENES)
     with ThreadPoolExecutor(4) as ex:
         for res in ex.map(lambda n: (lambda: gen(n))() if True else None, names):
             print(res, flush=True)

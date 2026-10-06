@@ -9,7 +9,7 @@ SITE = os.path.join(ROOT, 'site')
 BASE = '/tkl-website'  # Unterpfad auf frdlnk-gc.github.io; bei eigener Domain auf '' setzen
 BASIS_URL = 'https://frdlnk-gc.github.io' + BASE
 VORSCHAU = True  # solange die Seite auf der Vorschau-Domain liegt: noindex
-V = '20261006a'  # Cache-Version für CSS/JS
+V = '20261006b'  # Cache-Version für CSS/JS
 
 TEL, TEL_LINK = '02065 90 36-0', 'tel:+492065903600'
 MAIL = 'info@tkl.gmbh'
@@ -17,10 +17,10 @@ MAIL = 'info@tkl.gmbh'
 LEISTUNGEN = [
  # slug, titel, kurz, icon, farbe, bild, illu?
  ('gruenpflege', 'Grünpflege', 'Rasen, Hecken, Gehölze und Wege – regelmäßig, nach festem Plan und immer mit derselben Kolonne.', 'blatt', 'gruen', 'maeher-block', False),
- ('winterdienst', 'Winterdienst', 'Räumen und Streuen, bevor Ihre Mieter und Mitarbeiter aus dem Haus gehen – zuverlässig den ganzen Winter.', 'schnee', 'blau', 'illu-winterdienst', True),
- ('spielplaetze', 'Spielplätze', 'Regelmäßige Kontrolle, Pflege und Reparatur – damit Ihre Spielplätze sicher bleiben.', 'spiel', 'rot', 'illu-spielplaetze', True),
- ('baumpflege', 'Baumpflege', 'Gesunde, verkehrssichere Bäume auf Ihren Grünflächen – als Teil der laufenden Pflege.', 'baum', 'gruen', 'illu-baumpflege', True),
- ('aussenanlagen', 'Neubau & Sanierung', 'Neue Außenanlagen nach Sanierung oder Neubau: Rasen, Pflanzungen, Wege und Pflaster aus einer Hand.', 'pflaster', 'sand', 'illu-neubau', True),
+ ('winterdienst', 'Winterdienst', 'Räumen und Streuen, bevor Ihre Mieter und Mitarbeiter aus dem Haus gehen – zuverlässig den ganzen Winter.', 'schnee', 'blau', 'collage-winter', True),
+ ('spielplaetze', 'Spielplätze', 'Regelmäßige Kontrolle, Pflege und Reparatur – damit Ihre Spielplätze sicher bleiben.', 'spiel', 'rot', 'collage-spielplatz', True),
+ ('baumpflege', 'Baumpflege', 'Gesunde, verkehrssichere Bäume auf Ihren Grünflächen – als Teil der laufenden Pflege.', 'baum', 'gruen', 'collage-baum', True),
+ ('aussenanlagen', 'Neubau & Sanierung', 'Neue Außenanlagen nach Sanierung oder Neubau: Rasen, Pflanzungen, Wege und Pflaster aus einer Hand.', 'pflaster', 'sand', 'collage-neubau', True),
 ]
 
 def esc(s): return html.escape(s, quote=True)
@@ -89,13 +89,14 @@ def rueckruf(aktiv):
     return f'''<div class="rueckruf"><button class="rueckruf-knopf" type="button" aria-expanded="false" aria-controls="rueckruf-panel"><img src="/assets/img/avatar-ralf.webp" alt="" width="46" height="46"><span class="online"></span>{'Fragen? Wir rufen zurück' if not du else 'Fragen zum Job?'}</button>
 <div class="rueckruf-panel" id="rueckruf-panel" role="dialog" aria-label="Rückruf anfordern"><button class="rueckruf-zu" type="button" aria-label="Schließen">×</button>
 <div class="rueckruf-kopf"><img src="/assets/img/avatar-ralf.webp" alt="Ralf Jung" width="54" height="54"><span><b>Ralf Jung</b><span>Geschäftsführung · TKL GmbH</span></span></div>
-<p>{txt}</p><a class="btn klein dunkel" href="{TEL_LINK}" style="width:100%;margin-bottom:12px">{ic('tel')} {TEL}</a>
-<form data-typ="{'bewerbung' if du else 'anfrage'}" novalidate><div class="honig" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
-<div class="feld"><input name="name" placeholder="{'Dein' if du else 'Ihr'} Name" autocomplete="name" aria-label="Name"></div>
-<div class="feld"><input name="telefon" type="tel" placeholder="Telefonnummer" autocomplete="tel" aria-label="Telefonnummer"></div>
-<div class="feld"><input name="zeit" placeholder="Wann passt es? (optional)" aria-label="Wunschzeit"></div>
+<p>{txt}</p><a class="btn dunkel" href="{TEL_LINK}" style="width:100%;margin-bottom:12px;min-height:48px">{ic('tel')} {TEL}</a>
+<form data-typ="{'bewerbung' if du else 'anfrage'}" data-anrede="{'du' if du else 'sie'}" novalidate><div class="honig" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
+<div class="feld"><input name="name" placeholder="Vor- und Nachname" autocomplete="name" aria-label="Vor- und Nachname"></div>
+{'' if du else '<div class="feld"><input name="firma" placeholder="Unternehmen" autocomplete="organization" aria-label="Unternehmen"></div>'}
+<div class="zwei"><div class="feld"><input name="telefon" type="tel" placeholder="Telefon" autocomplete="tel" aria-label="Telefon"></div><div class="feld"><input name="email" type="email" placeholder="E-Mail" autocomplete="email" aria-label="E-Mail"></div></div>
+<div class="feld"><textarea name="nachricht" rows="2" placeholder="{'Worum geht es? (z. B. Frage zur Stelle)' if du else 'Worum geht es? (z. B. Grünpflege für 3 Wohnanlagen)'}" aria-label="Worum geht es?"></textarea></div>
 <label class="check" style="margin-top:4px;font-size:.8rem"><input type="checkbox" name="datenschutz"><span>Einverstanden mit der <a href="/datenschutz/" target="_blank">Datenschutzerklärung</a></span></label>
-<p class="f-fehler" role="alert" style="margin:0;min-height:0"></p><button class="btn klein" type="submit" style="width:100%">Rückruf anfordern</button></form></div></div>
+<p class="f-fehler" role="alert" style="margin:0;min-height:0"></p><button class="btn" type="submit" style="width:100%;min-height:48px">Rückruf anfordern</button></form></div></div>
 '''
 
 def fuss(aktiv=''):
